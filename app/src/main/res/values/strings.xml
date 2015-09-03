@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">ReactiveSensors</string>
+  <string name="waiting_for_sensor">waiting for sensor...</string>
+</resources>
