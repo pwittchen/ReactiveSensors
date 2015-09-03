@@ -9,6 +9,11 @@ min sdk version = 9
 
 Detailed description, samples and download section will be added later.
 
+Example
+-------
+
+Exemplary application, which reads gyroscope sensor is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor.
+
 Code style
 ----------
 
