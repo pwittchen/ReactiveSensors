@@ -14,6 +14,10 @@ Code style
 
 Code style used in the project is called `SquareAndroid` from Java Code Styles repository by Square available at: https://github.com/square/java-code-styles. Currently, library doesn't have checkstyle verification attached. It can be done in the future.
 
+References
+----------
+- [Sensors Overview](http://developer.android.com/guide/topics/sensors/sensors_overview.html)
+
 License
 -------
 
@@ -30,7 +34,3 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-References
-----------
-- [Sensors Overview](http://developer.android.com/guide/topics/sensors/sensors_overview.html)
