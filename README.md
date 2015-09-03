@@ -1,2 +1,2 @@
 # ReactiveSensors
-Android library monitoring hardware and software sensors with RxJava Observables
+Android library monitoring hardware and software sensors with RxJava Observables (in development)
