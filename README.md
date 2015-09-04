@@ -1,5 +1,5 @@
 # ReactiveSensors [![Build Status](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=master)](https://travis-ci.org/pwittchen/ReactiveSensors)
-Android library monitoring hardware and software sensors with RxJava Observables.
+Android library monitoring hardware sensors with RxJava Observables.
 
 Library is compatible with RxJava 1.0.+ and RxAndroid 1.0.+ and uses them under the hood.
 
