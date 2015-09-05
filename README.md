@@ -14,6 +14,7 @@ Contents
   - [Subscribing and ubsubscribing observables](#subscribing-and-ubsubscribing-observables)
   - [Filtering stream](#filtering-stream)
   - [Other practices](#other-practices)
+- [Download](#download)
 - [Code style](#code-style)
 - [References](#references)
 - [License](#license)
@@ -84,6 +85,11 @@ If we don't apply any filter, we will receive both accuracy and sensor readings 
 ### Other practices
 
 See also [Best Practices for Accessing and Using Sensors](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-practices).
+
+Download
+--------
+
+:construction: Download information will be available soon. :construction:
 
 Code style
 ----------
