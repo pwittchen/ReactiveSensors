@@ -78,9 +78,9 @@ When we are using subscriptions in Activity, we should subscribe them in `onResu
 
 ### Filtering stream
 
-When we want to receive only sensor updates, we should use `ReactiveSensorEvent.filterSensorChanged()` method in `filter(...)` method from RxJava.
+When we want to receive **only sensor updates**, we should use `ReactiveSensorEvent.filterSensorChanged()` method in `filter(...)` method from RxJava.
 
-When we want to receive only accurracy updates, we should use `ReactiveSensorEvent.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
+When we want to receive **only accurracy updates**, we should use `ReactiveSensorEvent.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
 
 If we don't apply any filter, we will receive both accuracy and sensor readings updates.
 
