@@ -34,3 +34,5 @@ dependencies {
     exclude group: 'junit' // Android has JUnit built in
   }
 }
+
+apply from: '../maven_push.gradle'
