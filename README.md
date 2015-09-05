@@ -27,25 +27,24 @@ Code sample below demonstrates how to observe Gyroscope sensor.
 Please note that we are filtering events occuring when sensors reading change with `ReactiveSensorEvent.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filter with `ReactiveSensorEvent.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified about sensor readings changes and accuracy changes.
 
 ```java
-new ReactiveSensors(this)
-        .observeSensor(Sensor.TYPE_GYROSCOPE)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
-        .filter(ReactiveSensorEvent.filterSensorChanged())
-        .subscribe(new Action1<ReactiveSensorEvent>() {
-            @Override
-            public void call(ReactiveSensorEvent reactiveSensorEvent) {
-                SensorEvent event = reactiveSensorEvent.getSensorEvent();
+new ReactiveSensors(this).observeSensor(Sensor.TYPE_GYROSCOPE)
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribeOn(Schedulers.io())
+    .filter(ReactiveSensorEvent.filterSensorChanged())
+    .subscribe(new Action1<ReactiveSensorEvent>() {
+      @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
+        SensorEvent event = reactiveSensorEvent.getSensorEvent();
 
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
 
-                String message = String.format("x = %f, y = %f, z = %f", x, y, z);
+        String message = String.format("x = %f, y = %f, z = %f", x, y, z);
 
-                Log.d("gyroscope readings", message);
-            }
-        });
+        Log.d("gyroscope readings", message);
+      }
+    });
+}
 ```
 
 We can observe any hardware sensor in the same way. You can check [list of all sensors in official Android documentation](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-intro). To get list of all sensors available on the current device, you can use `getSensors()` method available in `ReactiveSensors` class.
