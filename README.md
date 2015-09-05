@@ -93,9 +93,23 @@ See also [Best Practices for Accessing and Using Sensors](http://developer.andro
 Download
 --------
 
-:construction: Download information will be available soon. :construction:
+You can depend on the library through Maven:
 
-We're waiting for Maven Sync.
+```xml
+<dependency>
+    <groupId>com.github.pwittchen</groupId>
+    <artifactId>reactivesensors</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+or through Gradle:
+
+```groovy
+dependencies {
+  compile 'com.github.pwittchen:reactivesensors:0.0.1'
+}
+```
 
 Tests
 -----
