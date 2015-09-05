@@ -5,6 +5,8 @@ Library is compatible with RxJava 1.0.+ and RxAndroid 1.0.+ and uses them under 
 
 min sdk version = 9
 
+JavaDoc is available at: http://pwittchen.github.io/ReactiveSensors/
+
 Contents
 --------
 - [Usage](#usage)
