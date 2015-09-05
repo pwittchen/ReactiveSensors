@@ -12,7 +12,8 @@ Contents
 - [Good practices](#good-practices)
   - [Checking whether sensor exists](#checking-whether-sensor-exists)
   - [Subscribing and ubsubscribing observables](#subscribing-and-ubsubscribing-observables)
-  - [Filtering stream](filtering-stream)
+  - [Filtering stream](#filtering-stream)
+  - [Other practices](#other-practices)
 - [Code style](#code-style)
 - [References](#references)
 - [License](#license)
@@ -46,6 +47,8 @@ new ReactiveSensors(this)
         });
 ```
 
+We can observe any hardware sensor in the same way. You can check [list of all sensors in official Android documentation](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-intro).
+
 Example
 -------
 
@@ -77,6 +80,10 @@ When we want to receive only sensor updates, we should use `ReactiveSensorEvent.
 When we want to receive only accurracy updates, we should use `ReactiveSensorEvent.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
 
 If we don't apply any filter, we will receive both accuracy and sensor readings updates.
+
+### Other practices
+
+See also [Best Practices for Accessing and Using Sensors](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-practices).
 
 Code style
 ----------
