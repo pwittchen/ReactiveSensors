@@ -47,12 +47,12 @@ new ReactiveSensors(this)
         });
 ```
 
-We can observe any hardware sensor in the same way. You can check [list of all sensors in official Android documentation](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-intro).
+We can observe any hardware sensor in the same way. You can check [list of all sensors in official Android documentation](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-intro). To get list of all sensors available on the current device, you can use `getSensors()` method available in `ReactiveSensors` class.
 
 Example
 -------
 
-Exemplary application, which reads gyroscope sensor is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor. To get list of all sensors available on the current device, you can use `getSensors()` method available in `ReactiveSensors` class.
+Exemplary application, which reads gyroscope sensor is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor.
 
 Good practices
 --------------
