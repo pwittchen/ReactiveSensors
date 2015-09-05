@@ -17,6 +17,7 @@ Contents
   - [Filtering stream](#filtering-stream)
   - [Other practices](#other-practices)
 - [Download](#download)
+- [Tests](#tests)
 - [Code style](#code-style)
 - [References](#references)
 - [License](#license)
@@ -95,6 +96,15 @@ Download
 :construction: Download information will be available soon. :construction:
 
 We're waiting for Maven Sync.
+
+Tests
+-----
+
+Tests are available in `library/src/androidTest/java/` directory and can be executed on emulator or Android device from Android Studio or CLI with the following command:
+
+```
+./gradlew connectedCheck
+```
 
 Code style
 ----------
