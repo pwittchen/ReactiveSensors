@@ -9,6 +9,13 @@ min sdk version = 9
 
 Detailed description, samples and download section will be added later.
 
+Contents
+--------
+- [Example](#example)
+- [Code style](#code-style)
+- [References](#references)
+- [License](#license)
+
 Example
 -------
 
