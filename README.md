@@ -5,21 +5,78 @@ Library is compatible with RxJava 1.0.+ and RxAndroid 1.0.+ and uses them under 
 
 min sdk version = 9
 
-**This project is under development**. :construction: :construction_worker: 
-
-Detailed description, samples and download section will be added later.
-
 Contents
 --------
+- [Usage](#usage)
 - [Example](#example)
+- [Good practices](#good-practices)
+  - [Checking whether sensor exists](#checking-whether-sensor-exists)
+  - [Subscribing and ubsubscribing observables](#subscribing-and-ubsubscribing-observables)
+  - [Filtering stream](filtering-stream)
 - [Code style](#code-style)
 - [References](#references)
 - [License](#license)
+
+Usage
+-----
+
+Code sample below demonstrates how to observe Gyroscope sensor. 
+
+Please note that we are filtering events occuring when sensors reading change with `ReactiveSensorEvent.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filter with `ReactiveSensorEvent.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified about sensor readings changes and accuracy changes.
+
+```java
+new ReactiveSensors(this)
+        .observeSensor(Sensor.TYPE_GYROSCOPE)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .filter(ReactiveSensorEvent.filterSensorChanged())
+        .subscribe(new Action1<ReactiveSensorEvent>() {
+            @Override
+            public void call(ReactiveSensorEvent reactiveSensorEvent) {
+                SensorEvent event = reactiveSensorEvent.getSensorEvent();
+
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+
+                String message = String.format("x = %f, y = %f, z = %f", x, y, z);
+
+                Log.d("gyroscope readings", message);
+            }
+        });
+```
 
 Example
 -------
 
 Exemplary application, which reads gyroscope sensor is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor.
+
+Good practices
+--------------
+
+### Checking whether sensor exists
+
+It's good to check whether sensor exists before we start observing it. We can do it in the following way
+
+```java
+if (!reactiveSensors.hasSensor(SENSOR_TYPE)) {
+    tvSensor.setText("Sorry, your device doesn't have required sensor.");
+} else {
+    // observe sensor
+}
+```
+
+### Subscribing and ubsubscribing observables
+
+When we are using subscriptions in Activity, we should subscribe them in `onResume()` method and unsubscribe them in `onPause()` method.
+
+### Filtering stream
+
+When we want to receive only sensor updates, we should use `ReactiveSensorEvent.filterSensorChanged()` method in `filter(...)` method from RxJava.
+
+When we want to receive only accurracy updates, we should use `ReactiveSensorEvent.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
+
+If we don't apply any filter, we will receive both accuracy and sensor readings updates.
 
 Code style
 ----------
