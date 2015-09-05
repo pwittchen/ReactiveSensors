@@ -63,10 +63,10 @@ Good practices
 It's good to check whether sensor exists before we start observing it. We can do it in the following way
 
 ```java
-if (!reactiveSensors.hasSensor(SENSOR_TYPE)) {
-    tvSensor.setText("Sorry, your device doesn't have required sensor.");
+if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
+  // observe sensor
 } else {
-    // observe sensor
+  // show error message
 }
 ```
 
