@@ -60,7 +60,7 @@ Good practices
 
 ### Checking whether sensor exists
 
-It's good to check whether sensor exists before we start observing it. We can do it in the following way
+We should check whether device has concrete sensor before we start observing it. We can do it in the following way
 
 ```java
 if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
