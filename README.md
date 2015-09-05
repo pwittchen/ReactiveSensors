@@ -94,6 +94,8 @@ Download
 
 :construction: Download information will be available soon. :construction:
 
+We're waiting for Maven Sync.
+
 Code style
 ----------
 
