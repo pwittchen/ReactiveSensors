@@ -1,3 +1,5 @@
+[![Android Gems](http://www.android-gems.com/badge/pwittchen/ReactiveSensors.svg?branch=master)](http://www.android-gems.com/lib/pwittchen/ReactiveSensors)
+
 # ReactiveSensors 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451) [![Build Status](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=master)](https://travis-ci.org/pwittchen/ReactiveSensors) ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat)
 
