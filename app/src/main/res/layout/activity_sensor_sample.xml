@@ -9,19 +9,12 @@
     tools:context=".MainActivity"
     >
 
-  <Button
-      android:id="@+id/b_gyroscope"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Gyroscope sample"
-      />
-
-  <Button
-      android:id="@+id/b_orientation"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Orientation sample"
-      android:layout_below="@+id/b_gyroscope"
-      />
+    <TextView
+        android:id="@+id/sensor"
+        android:text="@string/waiting_for_sensor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        />
 
 </RelativeLayout>
