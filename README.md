@@ -57,7 +57,7 @@ We can observe any hardware sensor in the same way. You can check [list of all s
 Example
 -------
 
-Exemplary application, which reads readings of various sensors is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor in a given samples.
+Exemplary application, which gets readings of various sensors is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor in a given samples.
 
 Good practices
 --------------
