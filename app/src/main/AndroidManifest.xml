@@ -21,6 +21,18 @@
 
     <activity android:name=".samples.GyroscopeActivity"/>
     <activity android:name=".samples.OrientationActivity"/>
+    <activity android:name=".samples.AccelerometerActivity"/>
+    <activity android:name=".samples.AmbientTemperatureActivity"/>
+    <activity android:name=".samples.GravityActivity"/>
+    <activity android:name=".samples.LightActivity"/>
+    <activity android:name=".samples.LinearAccelerationActivity"/>
+    <activity android:name=".samples.MagneticFieldActivity"/>
+    <activity android:name=".samples.PressureActivity"/>
+    <activity android:name=".samples.ProximityActivity"/>
+    <activity android:name=".samples.RelativeHumidityActivity"/>
+    <activity android:name=".samples.RotationVectorActivity"/>
+    <activity android:name=".samples.TemperatureActivity"/>
+
   </application>
 
 </manifest>
