@@ -51,9 +51,9 @@ public class RotationVectorActivity extends AppCompatActivity {
     }
 
     subscription = reactiveSensors.observeSensor(SENSOR_TYPE)
-        .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .filter(ReactiveSensorEvent.filterSensorChanged())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<ReactiveSensorEvent>() {
           @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
             SensorEvent event = reactiveSensorEvent.getSensorEvent();
