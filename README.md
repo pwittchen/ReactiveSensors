@@ -154,6 +154,7 @@ Code style used in the project is called `SquareAndroid` from Java Code Styles r
 References
 ----------
 - [Sensors Overview](http://developer.android.com/guide/topics/sensors/sensors_overview.html)
+- [SensorManager class from Android SDK](http://developer.android.com/reference/android/hardware/SensorManager.html)
 
 License
 -------
