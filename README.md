@@ -12,6 +12,7 @@ JavaDoc is available at: http://pwittchen.github.io/ReactiveSensors/
 Contents
 --------
 - [Usage](#usage)
+  - [Setting sampling period](#setting-sampling-period)
 - [Example](#example)
 - [Good practices](#good-practices)
   - [Checking whether sensor exists](#checking-whether-sensor-exists)
@@ -53,6 +54,29 @@ new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
 ```
 
 We can observe any hardware sensor in the same way. You can check [list of all sensors in official Android documentation](http://developer.android.com/guide/topics/sensors/sensors_overview.html#sensors-intro). To get list of all sensors available on the current device, you can use `getSensors()` method available in `ReactiveSensors` class.
+
+### Setting sampling period
+
+Default sampling period for observable below is set to `SensorManager.SENSOR_DELAY_NORMAL`.
+
+```java
+Observable<ReactiveSensorEvent> observeSensor(int sensorType)
+ ```
+
+We can configure sampling period according to our needs with the following observable:
+
+```java
+Observable<ReactiveSensorEvent> observeSensor(int sensorType, 
+                                              final int samplingPeriodInUs)
+ ```
+ 
+We can use predefined values available in `SensorManager` class from Android SDK:
+- `int SENSOR_DELAY_FASTEST` - get sensor data as fast as possible
+- `int SENSOR_DELAY_GAME` - rate suitable for games
+- `int SENSOR_DELAY_NORMAL` - rate (default) suitable for screen orientation changes
+- `int SENSOR_DELAY_UI` - rate suitable for the user interface
+
+We can also define our own integer value in microseconds, but it's recommended to use predefined values.
 
 Example
 -------
