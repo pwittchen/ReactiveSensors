@@ -16,66 +16,13 @@
 package com.github.pwittchen.reactivesensors.samples;
 
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
-import com.github.pwittchen.reactivesensors.R;
-import com.github.pwittchen.reactivesensors.library.ReactiveSensorEvent;
-import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import com.github.pwittchen.reactivesensors.SensorActivity;
 
-public class ProximityActivity extends AppCompatActivity {
-  private final static int SENSOR_TYPE = Sensor.TYPE_PROXIMITY;
-
-  private TextView tvSensor;
-  private ReactiveSensors reactiveSensors;
-  private Subscription subscription;
-
+public class ProximityActivity extends SensorActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
+    sensorType = Sensor.TYPE_PROXIMITY;
+    sensorName = "proximity";
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sensor_sample);
-    tvSensor = (TextView) findViewById(R.id.sensor);
-    reactiveSensors = new ReactiveSensors(this);
-  }
-
-  @Override protected void onResume() {
-    super.onResume();
-
-    if (!reactiveSensors.hasSensor(SENSOR_TYPE)) {
-      tvSensor.setText("Sorry, your device doesn't have required sensor.");
-      return;
-    }
-
-    subscription = reactiveSensors.observeSensor(SENSOR_TYPE)
-        .subscribeOn(Schedulers.io())
-        .filter(ReactiveSensorEvent.filterSensorChanged())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<ReactiveSensorEvent>() {
-          @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
-            SensorEvent event = reactiveSensorEvent.getSensorEvent();
-
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-
-            String format = "proximity:\n x = %f\n y = %f\n z = %f";
-            String message = String.format(format, x, y, z);
-            tvSensor.setText(message);
-          }
-        });
-  }
-
-  @Override protected void onPause() {
-    super.onPause();
-
-    if (!reactiveSensors.hasSensor(SENSOR_TYPE)) {
-      return;
-    }
-
-    subscription.unsubscribe();
   }
 }
