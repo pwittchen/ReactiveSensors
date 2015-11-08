@@ -10,7 +10,7 @@
       android:theme="@style/AppTheme"
       >
     <activity
-        android:name=".MainActivity"
+        android:name=".app.MainActivity"
         android:label="@string/app_name"
         >
       <intent-filter>
@@ -19,19 +19,19 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".samples.GyroscopeActivity"/>
-    <activity android:name=".samples.OrientationActivity"/>
-    <activity android:name=".samples.AccelerometerActivity"/>
-    <activity android:name=".samples.AmbientTemperatureActivity"/>
-    <activity android:name=".samples.GravityActivity"/>
-    <activity android:name=".samples.LightActivity"/>
-    <activity android:name=".samples.LinearAccelerationActivity"/>
-    <activity android:name=".samples.MagneticFieldActivity"/>
-    <activity android:name=".samples.PressureActivity"/>
-    <activity android:name=".samples.ProximityActivity"/>
-    <activity android:name=".samples.RelativeHumidityActivity"/>
-    <activity android:name=".samples.RotationVectorActivity"/>
-    <activity android:name=".samples.TemperatureActivity"/>
+    <activity android:name=".app.samples.GyroscopeActivity"/>
+    <activity android:name=".app.samples.OrientationActivity"/>
+    <activity android:name=".app.samples.AccelerometerActivity"/>
+    <activity android:name=".app.samples.AmbientTemperatureActivity"/>
+    <activity android:name=".app.samples.GravityActivity"/>
+    <activity android:name=".app.samples.LightActivity"/>
+    <activity android:name=".app.samples.LinearAccelerationActivity"/>
+    <activity android:name=".app.samples.MagneticFieldActivity"/>
+    <activity android:name=".app.samples.PressureActivity"/>
+    <activity android:name=".app.samples.ProximityActivity"/>
+    <activity android:name=".app.samples.RelativeHumidityActivity"/>
+    <activity android:name=".app.samples.RotationVectorActivity"/>
+    <activity android:name=".app.samples.TemperatureActivity"/>
 
   </application>
 
