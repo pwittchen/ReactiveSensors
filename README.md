@@ -84,6 +84,8 @@ Example
 
 Exemplary application, which gets readings of various sensors is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor in a given samples.
 
+If you are interested in library usage with Kotlin, check sample in `app-kotlin` directory.
+
 Good practices
 --------------
 
