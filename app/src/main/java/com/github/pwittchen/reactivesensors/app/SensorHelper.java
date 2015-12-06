@@ -3,6 +3,7 @@ package com.github.pwittchen.reactivesensors.app;
 import android.hardware.SensorEvent;
 import android.widget.TextView;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensorEvent;
+import com.github.pwittchen.reactivesensors.library.ReactiveSensorFilter;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,7 +34,7 @@ public class SensorHelper {
   public Subscription createSubscription() {
     Subscription subscription = reactiveSensors.observeSensor(sensorType)
         .subscribeOn(Schedulers.io())
-        .filter(ReactiveSensorEvent.filterSensorChanged())
+        .filter(ReactiveSensorFilter.filterSensorChanged())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<ReactiveSensorEvent>() {
           @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {

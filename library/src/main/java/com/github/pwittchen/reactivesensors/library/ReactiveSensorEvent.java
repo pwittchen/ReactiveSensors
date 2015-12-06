@@ -17,7 +17,6 @@ package com.github.pwittchen.reactivesensors.library;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import rx.functions.Func1;
 
 public final class ReactiveSensorEvent {
   private SensorEvent sensorEvent;
@@ -45,39 +44,11 @@ public final class ReactiveSensorEvent {
     return accuracy;
   }
 
-  private boolean isSensorChanged() {
+  public boolean isSensorChanged() {
     return sensorEvent != null;
   }
 
-  private boolean isAccuracyChanged() {
+  public boolean isAccuracyChanged() {
     return sensor != null && accuracy != -1;
-  }
-
-  /**
-   * Predicate, which can be used in filter(...) method from RxJava
-   * to filter all events in which sensor value has changed
-   *
-   * @return Func1<ReactiveSensorEvent, Boolean> predicate indicating if sensor value has changed
-   */
-  public static Func1<ReactiveSensorEvent, Boolean> filterSensorChanged() {
-    return new Func1<ReactiveSensorEvent, Boolean>() {
-      @Override public Boolean call(ReactiveSensorEvent reactiveSensorEvent) {
-        return reactiveSensorEvent.isSensorChanged();
-      }
-    };
-  }
-
-  /**
-   * Predicate, which can be used in filter(...) method from RxJava
-   * to filter all events in which accuracy value has changed
-   *
-   * @return Func1<ReactiveSensorEvent, Boolean> predicate indicating if accuracy value has changed
-   */
-  public static Func1<ReactiveSensorEvent, Boolean> filterAccuracyChanged() {
-    return new Func1<ReactiveSensorEvent, Boolean>() {
-      @Override public Boolean call(ReactiveSensorEvent reactiveSensorEvent) {
-        return reactiveSensorEvent.isAccuracyChanged();
-      }
-    };
   }
 }

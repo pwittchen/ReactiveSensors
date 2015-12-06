@@ -18,20 +18,7 @@ package com.github.pwittchen.reactivesensors.kotlinapp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.AccelerometerActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.AmbientTemperatureActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.GravityActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.GyroscopeActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.LightActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.LinearAccelerationActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.MagneticFieldActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.OrientationActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.PressureActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.ProximityActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.RelativeHumidityActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.RotationVectorActivity
-import com.github.pwittchen.reactivesensors.kotlinapp.samples.TemperatureActivity
+import com.github.pwittchen.reactivesensors.kotlinapp.samples.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,11 +40,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun findViewAndSetOnClickListener(viewId: Int, cls: Class<*>) {
-        findViewById(viewId).setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                val intent = Intent(this@MainActivity, cls)
-                startActivity(intent)
-            }
+        findViewById(viewId).setOnClickListener({
+            val intent = Intent(this@MainActivity, cls)
+            startActivity(intent)
         })
     }
 }
