@@ -15,7 +15,8 @@ abstract class SensorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor_sample)
-        sensorHelper = SensorHelper(ReactiveSensors(this), sensorType, sensorName, findViewById(R.id.sensor) as TextView)
+        val textView = findViewById(R.id.sensor) as TextView
+        sensorHelper = SensorHelper(ReactiveSensors(this), sensorType, sensorName, textView)
         val sensorHelperWithCast = sensorHelper as SensorHelper //TODO: consider improvement to remove this additional val
 
         if (!sensorHelperWithCast.deviceHasSensor()) {

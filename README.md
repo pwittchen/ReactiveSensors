@@ -31,12 +31,12 @@ Usage
 
 Code sample below demonstrates how to observe Gyroscope sensor. 
 
-Please note that we are filtering events occuring when sensor readings change with `ReactiveSensorEvent.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorEvent.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
+Please note that we are filtering events occuring when sensor readings change with `ReactiveSensorFilter.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorFilter.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
     .subscribeOn(Schedulers.io())
-    .filter(ReactiveSensorEvent.filterSensorChanged())
+    .filter(ReactiveSensorFilter.filterSensorChanged())
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(new Action1<ReactiveSensorEvent>() {
       @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
@@ -109,9 +109,9 @@ When we are using subscriptions in Activity, we should subscribe them in `onResu
 
 ### Filtering stream
 
-When we want to receive **only sensor updates**, we should use `ReactiveSensorEvent.filterSensorChanged()` method in `filter(...)` method from RxJava.
+When we want to receive **only sensor updates**, we should use `ReactiveSensorFilter.filterSensorChanged()` method in `filter(...)` method from RxJava.
 
-When we want to receive **only accurracy updates**, we should use `ReactiveSensorEvent.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
+When we want to receive **only accuracy updates**, we should use `ReactiveSensorFilter.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
 
 If we don't apply any filter, we will receive both accuracy and sensor readings updates.
 
