@@ -1,3 +1,12 @@
+v. 0.1.1
+--------
+*13 Dec 2015*
+
+- bumped RxJava dependency to v. 1.1.0
+- bumped RxAndroid dependency to v. 1.1.0
+- bumped Google Truth test dependency to v. 0.27
+- bumped Gradle Build Tools to v. 1.3.1
+
 v. 0.1.0
 --------
 *06 Dec 2015*
