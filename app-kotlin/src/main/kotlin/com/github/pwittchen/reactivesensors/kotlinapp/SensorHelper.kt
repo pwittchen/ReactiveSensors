@@ -20,7 +20,7 @@ class SensorHelper(private val reactiveSensors: ReactiveSensors, private val sen
 
     fun createSubscription(): Subscription {
         return reactiveSensors.observeSensor(sensorType)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .filter(ReactiveSensorFilter.filterSensorChanged())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { reactiveSensorEvent ->

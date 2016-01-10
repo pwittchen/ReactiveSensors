@@ -33,7 +33,7 @@ public class SensorHelper {
 
   public Subscription createSubscription() {
     Subscription subscription = reactiveSensors.observeSensor(sensorType)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.computation())
         .filter(ReactiveSensorFilter.filterSensorChanged())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<ReactiveSensorEvent>() {

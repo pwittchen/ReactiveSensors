@@ -35,7 +35,7 @@ Please note that we are filtering events occuring when sensor readings change wi
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
-    .subscribeOn(Schedulers.io())
+    .subscribeOn(Schedulers.computation())
     .filter(ReactiveSensorFilter.filterSensorChanged())
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(new Action1<ReactiveSensorEvent>() {
