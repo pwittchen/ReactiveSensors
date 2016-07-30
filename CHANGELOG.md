@@ -1,3 +1,18 @@
+CHANGELOG
+=========
+
+v. 0.1.2
+--------
+*31 Jul 2016*
+
+- bumped RxJava dependency to v. 1.1.8
+- bumped RxAndroid dependency to v. 1.2.1
+- bumped Google Truth test dependency to v. 0.28
+- bumped Compile SDK version to v. 23
+- bumped Kotlin to v. 1.0.0
+- updated sample apps
+
+
 v. 0.1.1
 --------
 *13 Dec 2015*
