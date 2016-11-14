@@ -20,8 +20,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.os.Looper;
 import java.util.List;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
@@ -78,7 +80,7 @@ public final class ReactiveSensors {
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Observable<ReactiveSensorEvent> observeSensor(int sensorType) {
-    return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL);
+    return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL, null);
   }
 
   /**
@@ -91,7 +93,23 @@ public final class ReactiveSensors {
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Observable<ReactiveSensorEvent> observeSensor(int sensorType,
-      final int samplingPeriodInUs) {
+                                                       final int samplingPeriodInUs) {
+    return observeSensor(sensorType, samplingPeriodInUs, null);
+  }
+
+
+  /**
+   * Returns RxJava Observable, which allows to monitor hardware sensors
+   * as a stream of ReactiveSensorEvent object with defined sampling period
+   *
+   * @param sensorType sensor type from Sensor class from Android SDK
+   * @param samplingPeriodInUs sampling period in microseconds,
+   * @param handler the Handler the sensor events will be delivered to, use default if it is null
+   * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
+   * @return RxJava Observable with ReactiveSensorEvent
+   */
+  public Observable<ReactiveSensorEvent> observeSensor(int sensorType,
+                                                       final int samplingPeriodInUs, final Handler handler) {
 
     if (!hasSensor(sensorType)) {
       String format = "Sensor with id = %d is not available on this device";
@@ -116,7 +134,11 @@ public final class ReactiveSensors {
           }
         };
 
-        sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
+        if (null == handler) {
+          sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
+        } else {
+          sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
+        }
 
         subscriber.add(unsubscribeInUiThread(new Action0() {
           @Override public void call() {
