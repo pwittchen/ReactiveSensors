@@ -109,7 +109,8 @@ public final class ReactiveSensors {
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Observable<ReactiveSensorEvent> observeSensor(int sensorType,
-                                                       final int samplingPeriodInUs, final Handler handler) {
+                                                       final int samplingPeriodInUs,
+                                                       final Handler handler) {
 
     if (!hasSensor(sensorType)) {
       String format = "Sensor with id = %d is not available on this device";
