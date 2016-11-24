@@ -16,7 +16,7 @@ Contents
 - [Example](#example)
 - [Good practices](#good-practices)
   - [Checking whether sensor exists](#checking-whether-sensor-exists)
-  - [Subscribing and ubsubscribing observables](#subscribing-and-ubsubscribing-observables)
+  - [Subscribing and unsubscribing observables](#subscribing-and-unsubscribing-observables)
   - [Filtering stream](#filtering-stream)
   - [Other practices](#other-practices)
 - [Download](#download)
@@ -103,7 +103,7 @@ if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
 }
 ```
 
-### Subscribing and ubsubscribing observables
+### Subscribing and unsubscribing observables
 
 When we are using subscriptions in Activity, we should subscribe them in `onResume()` method and unsubscribe them in `onPause()` method.
 
