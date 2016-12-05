@@ -115,7 +115,7 @@ public final class ReactiveSensors {
     if (!hasSensor(sensorType)) {
       String format = "Sensor with id = %d is not available on this device";
       String message = String.format(format, sensorType);
-      throw new RuntimeException(message);
+      return Observable.error(new SensorNotFoundException(message));
     }
 
     final Sensor sensor = sensorManager.getDefaultSensor(sensorType);
