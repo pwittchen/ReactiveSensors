@@ -26,11 +26,6 @@ public abstract class SensorActivity extends AppCompatActivity {
 
   @Override protected void onResume() {
     super.onResume();
-
-    if (!sensorHelper.deviceHasSensor()) {
-      return;
-    }
-
     subscription = sensorHelper.createSubscription();
   }
 
