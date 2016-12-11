@@ -16,6 +16,7 @@ Contents
 - [Example](#example)
 - [Good practices](#good-practices)
   - [Checking whether sensor exists](#checking-whether-sensor-exists)
+  - [Letting it crash](#letting-it-crash)
   - [Subscribing and unsubscribing observables](#subscribing-and-unsubscribing-observables)
   - [Filtering stream](#filtering-stream)
   - [Other practices](#other-practices)
@@ -103,7 +104,9 @@ if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
 }
 ```
 
-In addition, we can let our subscription crash and handle this use case in `onError(throwable)` method implementation of the `Subscriber`:
+### Letting it crash
+
+We can let our subscription crash and handle situation when device does not have given sensor in `onError(throwable)` method implementation of the `Subscriber`:
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
@@ -118,6 +121,8 @@ new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
           @Override public void onError(Throwable throwable) {
             if (throwable instanceof SensorNotFoundException) {
               // device does not have given sensor - show error message
+            } else {
+              // handle other types of errors
             }
           }
 
