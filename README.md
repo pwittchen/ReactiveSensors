@@ -103,6 +103,30 @@ if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
 }
 ```
 
+In addition, we can let our subscription crash and handle this use case in `onError` implementation of the `Subscriber`:
+
+```java
+new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
+    .subscribeOn(Schedulers.computation())
+    .filter(ReactiveSensorFilter.filterSensorChanged())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(new Subscriber<ReactiveSensorEvent>() {
+          @Override public void onCompleted() {
+            // subscription completed
+          }
+
+          @Override public void onError(Throwable throwable) {
+            if (throwable instanceof SensorNotFoundException) {
+              // device does not have given sensor - show error message
+            }
+          }
+
+          @Override public void onNext(ReactiveSensorEvent event) {
+            // handle event
+          }
+        });
+```
+
 ### Subscribing and unsubscribing observables
 
 When we are using subscriptions in Activity, we should subscribe them in `onResume()` method and unsubscribe them in `onPause()` method.
