@@ -5,6 +5,8 @@ import android.widget.TextView;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensorEvent;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensorFilter;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
+import com.github.pwittchen.reactivesensors.library.SensorNotFoundException;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -23,21 +25,22 @@ public class SensorHelper {
     this.textViewForMessage = textViewForMessage;
   }
 
-  public boolean deviceHasSensor() {
-    if (!reactiveSensors.hasSensor(sensorType)) {
-      textViewForMessage.setText("Sorry, your device doesn't have required sensor.");
-      return false;
-    }
-    return true;
-  }
-
   public Subscription createSubscription() {
     Subscription subscription = reactiveSensors.observeSensor(sensorType)
         .subscribeOn(Schedulers.computation())
         .filter(ReactiveSensorFilter.filterSensorChanged())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<ReactiveSensorEvent>() {
-          @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
+        .subscribe(new Subscriber<ReactiveSensorEvent>() {
+          @Override public void onCompleted() {
+          }
+
+          @Override public void onError(Throwable throwable) {
+            if (throwable instanceof SensorNotFoundException) {
+              textViewForMessage.setText("Sorry, your device doesn't have required sensor.");
+            }
+          }
+
+          @Override public void onNext(ReactiveSensorEvent reactiveSensorEvent) {
             SensorEvent event = reactiveSensorEvent.getSensorEvent();
 
             float x = event.values[0];
