@@ -103,7 +103,7 @@ if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
 }
 ```
 
-In addition, we can let our subscription crash and handle this use case in `onError` implementation of the `Subscriber`:
+In addition, we can let our subscription crash and handle this use case in `onError(throwable)` method implementation of the `Subscriber`:
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
