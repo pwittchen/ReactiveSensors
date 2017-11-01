@@ -157,23 +157,7 @@ See also [Best Practices for Accessing and Using Sensors](http://developer.andro
 Download
 --------
 
-You can depend on the library through Maven:
-
-```xml
-<dependency>
-    <groupId>com.github.pwittchen</groupId>
-    <artifactId>reactivesensors-rx2</artifactId>
-    <version>...</version>
-</dependency>
-```
-
-or through Gradle:
-
-```groovy
-dependencies {
-  compile 'com.github.pwittchen:reactivesensors-rx2:...'
-}
-```
+TBD.
 
 Tests
 -----
