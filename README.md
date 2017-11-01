@@ -1,9 +1,14 @@
 # ReactiveSensors 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451) [![Build Status](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=master)](https://travis-ci.org/pwittchen/ReactiveSensors) ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451)
 
-Android library monitoring hardware sensors with RxJava Observables.
+Android library monitoring hardware sensors with RxJava.
 
-Library is compatible with RxJava 1.+ and RxAndroid 1.+ and uses them under the hood.
+| Current Branch | Branch  | Artifact Id | Build Status  | Coverage | Maven Central |
+|:--------------:|:-------:|:-----------:|:-------------:|:--------:|:-------------:|
+| | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | [![Build Status for RxJava1.x](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=RxJava1.x)](https://travis-ci.org/pwittchen/ReactiveSensors) | [![codecov](https://codecov.io/gh/pwittchen/ReactiveSensors/branch/RxJava1.x/graph/badge.svg)](https://codecov.io/gh/pwittchen/ReactiveSensors/branch/RxJava1.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
+| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | [![Build Status for RxJava2.x](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=RxJava2.x)](https://travis-ci.org/pwittchen/ReactiveSensors) | [![codecov](https://codecov.io/gh/pwittchen/ReactiveSensors/branch/RxJava2.x/graph/badge.svg)](https://codecov.io/gh/pwittchen/ReactiveSensors/branch/RxJava2.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
+
+This is **RxJava2.x** branch. To see documentation for RxJava1.x, switch to [RxJava1.x](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) branch.
 
 min sdk version = 9
 
@@ -17,7 +22,7 @@ Contents
 - [Good practices](#good-practices)
   - [Checking whether sensor exists](#checking-whether-sensor-exists)
   - [Letting it crash](#letting-it-crash)
-  - [Subscribing and unsubscribing observables](#subscribing-and-unsubscribing-observables)
+  - [Subscribing and disposing flowables](#subscribing-and-disposing-flowables)
   - [Filtering stream](#filtering-stream)
   - [Other practices](#other-practices)
 - [Download](#download)
@@ -32,14 +37,14 @@ Usage
 
 Code sample below demonstrates how to observe Gyroscope sensor. 
 
-Please note that we are filtering events occuring when sensor readings change with `ReactiveSensorFilter.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorFilter.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
+Please note that we are filtering events occurring when sensor readings change with `ReactiveSensorFilter.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorFilter.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
     .subscribeOn(Schedulers.computation())
     .filter(ReactiveSensorFilter.filterSensorChanged())
     .observeOn(AndroidSchedulers.mainThread())
-    .subscribe(new Action1<ReactiveSensorEvent>() {
+    .subscribe(new Consumer<ReactiveSensorEvent>() {
       @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
         SensorEvent event = reactiveSensorEvent.getSensorEvent();
 
@@ -59,16 +64,16 @@ We can observe any hardware sensor in the same way. You can check [list of all s
 
 ### Setting sampling period
 
-Default sampling period for observable below is set to `SensorManager.SENSOR_DELAY_NORMAL`.
+Default sampling period for flowable below is set to `SensorManager.SENSOR_DELAY_NORMAL`.
 
 ```java
-Observable<ReactiveSensorEvent> observeSensor(int sensorType)
+Flowable<ReactiveSensorEvent> observeSensor(int sensorType)
  ```
 
-We can configure sampling period according to our needs with the following observable:
+We can configure sampling period according to our needs with the following flowable:
 
 ```java
-Observable<ReactiveSensorEvent> observeSensor(int sensorType, 
+Flowable<ReactiveSensorEvent> observeSensor(int sensorType,
                                               final int samplingPeriodInUs)
  ```
  
@@ -80,12 +85,19 @@ We can use predefined values available in `SensorManager` class from Android SDK
 
 We can also define our own integer value in microseconds, but it's recommended to use predefined values.
 
+We can customize RxJava 2 Backpressure Strategy for our flowable with method:
+
+```java
+Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
+      final Handler handler, final BackpressureStrategy strategy)
+```
+
+Default Backpressure Strategy is `BUFFER`.
+
 Example
 -------
 
 Exemplary application, which gets readings of various sensors is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor in a given samples.
-
-If you are interested in library usage with Kotlin, check sample in `app-kotlin` directory.
 
 Good practices
 --------------
@@ -113,28 +125,22 @@ new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
     .subscribeOn(Schedulers.computation())
     .filter(ReactiveSensorFilter.filterSensorChanged())
     .observeOn(AndroidSchedulers.mainThread())
-    .subscribe(new Subscriber<ReactiveSensorEvent>() {
-          @Override public void onCompleted() {
-            // subscription completed
-          }
-
-          @Override public void onError(Throwable throwable) {
-            if (throwable instanceof SensorNotFoundException) {
-              // device does not have given sensor - show error message
-            } else {
-              // handle other types of errors
-            }
-          }
-
-          @Override public void onNext(ReactiveSensorEvent event) {
-            // handle event
-          }
-        });
+    .subscribe(new Consumer<ReactiveSensorEvent>() {
+      @Override public void accept(ReactiveSensorEvent reactiveSensorEvent) throws Exception {
+        // handle reactiveSensorEvent
+      }
+    }, new Consumer<Throwable>() {
+      @Override public void accept(Throwable throwable) throws Exception {
+        if (throwable instanceof SensorNotFoundException) {
+          textViewForMessage.setText("Sorry, your device doesn't have required sensor.");
+        }
+      }
+    });
 ```
 
-### Subscribing and unsubscribing observables
+### Subscribing and disposing flowables
 
-When we are using subscriptions in Activity, we should subscribe them in `onResume()` method and unsubscribe them in `onPause()` method.
+When we are using Disposables in Activity, we should subscribe them in `onResume()` method and dispose them in `onPause()` method.
 
 ### Filtering stream
 
@@ -156,8 +162,8 @@ You can depend on the library through Maven:
 ```xml
 <dependency>
     <groupId>com.github.pwittchen</groupId>
-    <artifactId>reactivesensors</artifactId>
-    <version>0.1.2</version>
+    <artifactId>reactivesensors-rx2</artifactId>
+    <version>...</version>
 </dependency>
 ```
 
@@ -165,7 +171,7 @@ or through Gradle:
 
 ```groovy
 dependencies {
-  compile 'com.github.pwittchen:reactivesensors:0.1.2'
+  compile 'com.github.pwittchen:reactivesensors-rx2:...'
 }
 ```
 

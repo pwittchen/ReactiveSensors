@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors
-import rx.Subscription
+import io.reactivex.disposables.Disposable
 
 abstract class SensorActivity : AppCompatActivity() {
-  private var subscription: Subscription? = null
+  private var subscription: Disposable? = null
   private var sensorHelper: SensorHelper? = null
   protected var sensorType: Int = 0
   protected var sensorName: String = ""
@@ -32,6 +32,6 @@ abstract class SensorActivity : AppCompatActivity() {
       return
     }
 
-    sensorHelper!!.safelyUnsubscribe(subscription)
+    sensorHelper!!.safelyDispose(subscription)
   }
 }

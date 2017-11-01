@@ -17,20 +17,16 @@ package com.github.pwittchen.reactivesensors.library;
 
 import android.content.Context;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
-import android.os.Looper;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.functions.Action;
 import java.util.List;
-
-import rx.Observable;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.subscriptions.Subscriptions;
+import java.util.Locale;
 
 /**
  * ReactiveSensors is an Android library
@@ -79,7 +75,7 @@ public final class ReactiveSensors {
    * @param sensorType sensor type from Sensor class from Android SDK
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Observable<ReactiveSensorEvent> observeSensor(int sensorType) {
+  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType) {
     return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL, null);
   }
 
@@ -92,11 +88,14 @@ public final class ReactiveSensors {
    * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Observable<ReactiveSensorEvent> observeSensor(int sensorType,
-                                                       final int samplingPeriodInUs) {
+  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs) {
     return observeSensor(sensorType, samplingPeriodInUs, null);
   }
 
+  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
+      final Handler handler) {
+    return observeSensor(sensorType, samplingPeriodInUs, handler, BackpressureStrategy.BUFFER);
+  }
 
   /**
    * Returns RxJava Observable, which allows to monitor hardware sensors
@@ -106,64 +105,37 @@ public final class ReactiveSensors {
    * @param samplingPeriodInUs sampling period in microseconds,
    * @param handler the Handler the sensor events will be delivered to, use default if it is null
    * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
+   * @param strategy BackpressureStrategy for RxJava 2 Flowable type
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Observable<ReactiveSensorEvent> observeSensor(int sensorType,
-                                                       final int samplingPeriodInUs,
-                                                       final Handler handler) {
+  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
+      final Handler handler, final BackpressureStrategy strategy) {
 
     if (!hasSensor(sensorType)) {
       String format = "Sensor with id = %d is not available on this device";
-      String message = String.format(format, sensorType);
-      return Observable.error(new SensorNotFoundException(message));
+      String message = String.format(Locale.getDefault(), format, sensorType);
+      return Flowable.error(new SensorNotFoundException(message));
     }
 
     final Sensor sensor = sensorManager.getDefaultSensor(sensorType);
+    final SensorEventListenerWrapper wrapper = new SensorEventListenerWrapper();
+    final SensorEventListener listener = wrapper.create();
 
-    return Observable.create(new Observable.OnSubscribe<ReactiveSensorEvent>() {
-      @Override public void call(final Subscriber<? super ReactiveSensorEvent> subscriber) {
+    return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
+      @Override public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
+          throws Exception {
 
-        final SensorEventListener listener = new SensorEventListener() {
-          @Override public void onSensorChanged(SensorEvent sensorEvent) {
-            ReactiveSensorEvent event = new ReactiveSensorEvent(sensorEvent);
-            subscriber.onNext(event);
-          }
+        wrapper.setEmitter(emitter);
 
-          @Override public void onAccuracyChanged(Sensor sensor, int accuracy) {
-            ReactiveSensorEvent event = new ReactiveSensorEvent(sensor, accuracy);
-            subscriber.onNext(event);
-          }
-        };
-
-        if (null == handler) {
+        if (handler == null) {
           sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
         } else {
           sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
         }
-
-        subscriber.add(unsubscribeInUiThread(new Action0() {
-          @Override public void call() {
-            sensorManager.unregisterListener(listener);
-          }
-        }));
       }
-    });
-  }
-
-  private Subscription unsubscribeInUiThread(final Action0 unsubscribe) {
-    return Subscriptions.create(new Action0() {
-      @Override public void call() {
-        if (Looper.getMainLooper() == Looper.myLooper()) {
-          unsubscribe.call();
-        } else {
-          final Scheduler.Worker inner = AndroidSchedulers.mainThread().createWorker();
-          inner.schedule(new Action0() {
-            @Override public void call() {
-              unsubscribe.call();
-              inner.unsubscribe();
-            }
-          });
-        }
+    }, strategy).doOnCancel(new Action() {
+      @Override public void run() throws Exception {
+        sensorManager.unregisterListener(listener);
       }
     });
   }

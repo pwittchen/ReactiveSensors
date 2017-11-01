@@ -28,8 +28,8 @@ android {
 }
 
 dependencies {
-  api deps.rxjava
-  api deps.rxandroid
+  api deps.rxjava2
+  api deps.rxandroid2
 
   androidTestImplementation deps.testingsupportlib
   androidTestImplementation(deps.truth) {
