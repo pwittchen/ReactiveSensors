@@ -118,7 +118,7 @@ if (reactiveSensors.hasSensor(SENSOR_TYPE)) {
 
 ### Letting it crash
 
-We can let our subscription crash and handle situation when device does not have given sensor in `onError(throwable)` method implementation of the `Subscriber`. Other types of errors can be handled there as well.
+We can let our subscription crash and handle situation when device does not have given sensor e.g. in the `Consumer<Throwable>()` implementation (if we want to return `Disposable`) or in the `onError(throwable)` method implementation of the `Subscriber`. Other types of errors can be handled there as well.
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
