@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+v. 0.2.0
+--------
+*02 Nov 2017*
+- returning error through Rx to make the error handling easier - issue #29
+- creating sensor observable with the ability to specify handler - PR #26
+- updated project dependencies
+- migrated library to RxJava2.x on `RxJava2.x` branch
+- kept backward compatibility with RxJava1.x on `RxJava1.x` branch
+- removed `master` branch
+
 v. 0.1.2
 --------
 *31 Jul 2016*
