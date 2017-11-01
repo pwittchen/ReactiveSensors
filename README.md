@@ -12,7 +12,7 @@ This is **RxJava1.x** branch. To see documentation for RxJava2.x, switch to [RxJ
 
 min sdk version = 9
 
-JavaDoc is available at: http://pwittchen.github.io/ReactiveSensors/
+JavaDoc is available at: http://pwittchen.github.io/ReactiveSensors/RxJava1.x
 
 Contents
 --------
