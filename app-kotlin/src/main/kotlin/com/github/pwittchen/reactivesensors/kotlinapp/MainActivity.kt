@@ -18,6 +18,7 @@ package com.github.pwittchen.reactivesensors.kotlinapp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
 import com.github.pwittchen.reactivesensors.kotlinapp.samples.*
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun findViewAndSetOnClickListener(viewId: Int, cls: Class<*>) {
-        findViewById(viewId).setOnClickListener({
+        findViewById<Button>(viewId).setOnClickListener({
             val intent = Intent(this@MainActivity, cls)
             startActivity(intent)
         })

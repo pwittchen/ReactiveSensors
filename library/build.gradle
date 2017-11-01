@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: '../config/quality.gradle'
+apply from: '../maven_push.gradle'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -27,13 +28,11 @@ android {
 }
 
 dependencies {
-  compile 'io.reactivex:rxjava:1.2.3'
-  compile 'io.reactivex:rxandroid:1.2.1'
+  api deps.rxjava
+  api deps.rxandroid
 
-  androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-  androidTestCompile('com.google.truth:truth:0.28') {
+  androidTestImplementation deps.testingsupportlib
+  androidTestImplementation(deps.truth) {
     exclude group: 'junit' // Android has JUnit built in
   }
 }
-
-apply from: '../maven_push.gradle'
