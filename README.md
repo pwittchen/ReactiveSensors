@@ -1,9 +1,14 @@
 # ReactiveSensors 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451) [![Build Status](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=master)](https://travis-ci.org/pwittchen/ReactiveSensors) ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451)
 
-Android library monitoring hardware sensors with RxJava Observables.
+Android library monitoring hardware sensors with RxJava.
 
-Library is compatible with RxJava 1.+ and RxAndroid 1.+ and uses them under the hood.
+| Current Branch | Branch  | Artifact Id | Build Status  | Maven Central |
+|:--------------:|:-------:|:-----------:|:-------------:|:-------------:|
+| :ballot_box_with_check: | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | [![Build Status for RxJava1.x](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=RxJava1.x)](https://travis-ci.org/pwittchen/ReactiveSensors) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
+| | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | [![Build Status for RxJava2.x](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=RxJava2.x)](https://travis-ci.org/pwittchen/ReactiveSensors) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
+
+This is **RxJava1.x** branch. To see documentation for RxJava2.x, switch to [RxJava2.x](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) branch.
 
 min sdk version = 9
 
@@ -84,8 +89,6 @@ Example
 -------
 
 Exemplary application, which gets readings of various sensors is located in `app` directory of this repository. You can easily change `SENSOR_TYPE` variable to read values from a different sensor in a given samples.
-
-If you are interested in library usage with Kotlin, check sample in `app-kotlin` directory.
 
 Good practices
 --------------
