@@ -160,7 +160,7 @@ You can depend on the library through Maven:
 <dependency>
     <groupId>com.github.pwittchen</groupId>
     <artifactId>reactivesensors</artifactId>
-    <version>0.1.2</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -168,7 +168,7 @@ or through Gradle:
 
 ```groovy
 dependencies {
-  compile 'com.github.pwittchen:reactivesensors:0.1.2'
+  compile 'com.github.pwittchen:reactivesensors:0.2.0'
 }
 ```
 
