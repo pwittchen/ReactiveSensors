@@ -25,6 +25,7 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.functions.Action;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,9 +93,28 @@ public final class ReactiveSensors {
     return observeSensor(sensorType, samplingPeriodInUs, null);
   }
 
+  /**
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object with defined sampling period
+   *
+   * @param samplingPeriodInUs sampling period in microseconds, you can use predefined values from
+   * SensorManager class with prefix SENSOR_DELAY
+   * @param sensorTypes sensor type from Sensor class from Android SDK
+   * @return RxJava Observable with ReactiveSensorEvent
+   */
+  public Flowable<ReactiveSensorEvent> observeSensors(final int samplingPeriodInUs,
+      int... sensorTypes) {
+    return observeSensors(samplingPeriodInUs, null, sensorTypes);
+  }
+
   public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
       final Handler handler) {
     return observeSensor(sensorType, samplingPeriodInUs, handler, BackpressureStrategy.BUFFER);
+  }
+
+  public Flowable<ReactiveSensorEvent> observeSensors(final int samplingPeriodInUs,
+      final Handler handler, int... sensorTypes) {
+    return observeSensors(samplingPeriodInUs, handler, BackpressureStrategy.BUFFER, sensorTypes);
   }
 
   /**
@@ -122,7 +142,8 @@ public final class ReactiveSensors {
     final SensorEventListener listener = wrapper.create();
 
     return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
-      @Override public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
+      @Override
+      public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
           throws Exception {
 
         wrapper.setEmitter(emitter);
@@ -134,7 +155,72 @@ public final class ReactiveSensors {
         }
       }
     }, strategy).doOnCancel(new Action() {
-      @Override public void run() throws Exception {
+      @Override
+      public void run() throws Exception {
+        sensorManager.unregisterListener(listener);
+      }
+    });
+  }
+
+  /**
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object with defined sampling period
+   *
+   * @param samplingPeriodInUs sampling period in microseconds,
+   * @param handler the Handler the sensor events will be delivered to, use default if it is null
+   * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
+   * @param strategy BackpressureStrategy for RxJava 2 Flowable type
+   * @param sensorTypes sensor types array from Sensor class from Android SDK
+   * @return RxJava Observable with ReactiveSensorEvent
+   */
+  public Flowable<ReactiveSensorEvent> observeSensors(final int samplingPeriodInUs,
+      final Handler handler,
+      final BackpressureStrategy strategy, int... sensorTypes) {
+    StringBuilder errorMessage = null;
+    for (int sensorType : sensorTypes) {
+      if (!hasSensor(sensorType)) {
+        if (errorMessage == null) {
+          errorMessage = new StringBuilder("Following sensors are not available on current device: "
+              + sensorType + " ");
+        } else {
+          errorMessage.append(sensorType);
+          errorMessage.append(" ");
+        }
+      }
+    }
+
+    if (errorMessage != null) {
+      return Flowable.error(new SensorNotFoundException(errorMessage.toString()));
+    }
+
+    final SensorEventListenerWrapper wrapper = new SensorEventListenerWrapper();
+    final SensorEventListener listener = wrapper.create();
+
+    final List<Sensor> sensors = new ArrayList<>();
+    for (int sensorType : sensorTypes) {
+      sensors.add(sensorManager.getDefaultSensor(sensorType));
+    }
+
+    return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
+      @Override
+      public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
+          throws Exception {
+
+        wrapper.setEmitter(emitter);
+
+        if (handler == null) {
+          for (Sensor sensor : sensors) {
+            sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
+          }
+        } else {
+          for (Sensor sensor : sensors) {
+            sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
+          }
+        }
+      }
+    }, strategy).doOnCancel(new Action() {
+      @Override
+      public void run() throws Exception {
         sensorManager.unregisterListener(listener);
       }
     });
