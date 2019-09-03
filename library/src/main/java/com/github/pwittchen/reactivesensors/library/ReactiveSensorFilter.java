@@ -17,6 +17,7 @@ package com.github.pwittchen.reactivesensors.library;
 
 import io.reactivex.functions.Predicate;
 
+@SuppressWarnings("PMD")
 public final class ReactiveSensorFilter {
   /**
    * Predicate, which can be used in filter(...) method from RxJava
