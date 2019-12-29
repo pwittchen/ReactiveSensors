@@ -25,12 +25,13 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.functions.Action;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * ReactiveSensors is an Android library
- * monitoring hardware and software sensors with RxJava Observables
+ * ReactiveSensors is an Android library monitoring hardware and software sensors with RxJava
+ * Observables
  */
 public final class ReactiveSensors {
 
@@ -68,9 +69,8 @@ public final class ReactiveSensors {
   }
 
   /**
-   * Returns RxJava Observable, which allows to monitor hardware sensors
-   * as a stream of ReactiveSensorEvent object.
-   * Sampling period is set to SensorManager.SENSOR_DELAY_NORMAL.
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object. Sampling period is set to SensorManager.SENSOR_DELAY_NORMAL.
    *
    * @param sensorType sensor type from Sensor class from Android SDK
    * @return RxJava Observable with ReactiveSensorEvent
@@ -80,16 +80,30 @@ public final class ReactiveSensors {
   }
 
   /**
-   * Returns RxJava Observable, which allows to monitor hardware sensors
-   * as a stream of ReactiveSensorEvent object with defined sampling period
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object with defined sampling period
    *
    * @param sensorType sensor type from Sensor class from Android SDK
-   * @param samplingPeriodInUs sampling period in microseconds,
-   * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
+   * @param samplingPeriodInUs sampling period in microseconds, you can use predefined values from
+   * SensorManager class with prefix SENSOR_DELAY
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs) {
     return observeSensor(sensorType, samplingPeriodInUs, null);
+  }
+
+  /**
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object with defined sampling period
+   *
+   * @param samplingPeriodInUs sampling period in microseconds, you can use predefined values from
+   * SensorManager class with prefix SENSOR_DELAY
+   * @param sensorTypes sensor type from Sensor class from Android SDK
+   * @return RxJava Observable with ReactiveSensorEvent
+   */
+  public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
+      int... sensorTypes) {
+    return observeManySensors(samplingPeriodInUs, null, sensorTypes);
   }
 
   public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
@@ -97,9 +111,15 @@ public final class ReactiveSensors {
     return observeSensor(sensorType, samplingPeriodInUs, handler, BackpressureStrategy.BUFFER);
   }
 
+  public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
+      final Handler handler, int... sensorTypes) {
+    return observeManySensors(samplingPeriodInUs, handler, BackpressureStrategy.BUFFER,
+        sensorTypes);
+  }
+
   /**
-   * Returns RxJava Observable, which allows to monitor hardware sensors
-   * as a stream of ReactiveSensorEvent object with defined sampling period
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object with defined sampling period
    *
    * @param sensorType sensor type from Sensor class from Android SDK
    * @param samplingPeriodInUs sampling period in microseconds,
@@ -122,7 +142,8 @@ public final class ReactiveSensors {
     final SensorEventListener listener = wrapper.create();
 
     return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
-      @Override public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
+      @Override
+      public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
           throws Exception {
 
         wrapper.setEmitter(emitter);
@@ -134,9 +155,74 @@ public final class ReactiveSensors {
         }
       }
     }, strategy).doOnCancel(new Action() {
-      @Override public void run() throws Exception {
+      @Override
+      public void run() throws Exception {
         sensorManager.unregisterListener(listener);
       }
     });
+  }
+
+  /**
+   * Returns RxJava Observable, which allows to monitor hardware sensors as a stream of
+   * ReactiveSensorEvent object with defined sampling period
+   *
+   * @param samplingPeriodInUs sampling period in microseconds,
+   * @param handler the Handler the sensor events will be delivered to, use default if it is null
+   * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
+   * @param strategy BackpressureStrategy for RxJava 2 Flowable type
+   * @param sensorTypes sensor types array from Sensor class from Android SDK
+   * @return RxJava Observable with ReactiveSensorEvent
+   */
+  public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs, final Handler handler,
+      final BackpressureStrategy strategy, int... sensorTypes) {
+    String errorMessage = getErrorMessage(sensorTypes);
+    if (errorMessage.length() != 0)
+      return Flowable.error(new SensorNotFoundException(errorMessage));
+
+    final SensorEventListenerWrapper wrapper = new SensorEventListenerWrapper();
+    final SensorEventListener listener = wrapper.create();
+
+    final List<Sensor> sensors = new ArrayList<>();
+    for (int sensorType : sensorTypes)
+      sensors.add(sensorManager.getDefaultSensor(sensorType));
+
+    return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
+      @Override
+      public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter)
+          throws Exception {
+        wrapper.setEmitter(emitter);
+
+        if (handler == null) {
+          for (Sensor sensor : sensors)
+            sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
+        } else {
+          for (Sensor sensor : sensors)
+            sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
+
+        }
+      }
+    }, strategy).doOnCancel(new Action() {
+      @Override
+      public void run() throws Exception {
+        sensorManager.unregisterListener(listener);
+      }
+    });
+  }
+
+  private String getErrorMessage(int[] sensorTypes) {
+    StringBuilder errorMessage = new StringBuilder();
+    for (int sensorType : sensorTypes) {
+      if (!hasSensor(sensorType)) {
+        if (errorMessage.length() == 0) {
+          errorMessage = new StringBuilder("Following sensors are not available on current device: "
+              + sensorType + " ");
+        }
+
+        errorMessage.append(sensorType);
+        errorMessage.append(" ");
+      }
+    }
+
+    return errorMessage.toString();
   }
 }
