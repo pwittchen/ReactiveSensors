@@ -1,4 +1,4 @@
-# ReactiveSensors 
+# ReactiveSensors
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451)
 
 Android library monitoring hardware sensors with RxJava.
@@ -6,7 +6,8 @@ Android library monitoring hardware sensors with RxJava.
 | Current Branch | Branch  | Artifact Id | CI Build Status | Maven Central |
 |:--------------:|:-------:|:-----------:|:---------------:|:-------------:|
 | | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava1.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
-| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava2.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
+| | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava2.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
+| :ballot_box_with_check: | [`RxJava3.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava3.x) | `reactivesensors-rx3` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava3.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx3.svg?style=flat) |
 
 
 Contents
@@ -30,7 +31,7 @@ Contents
 Usage
 -----
 
-Code sample below demonstrates how to observe Gyroscope sensor. 
+Code sample below demonstrates how to observe Gyroscope sensor.
 
 Please note that we are filtering events occurring when sensor readings change with `ReactiveSensorEvent::sensorChanged` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorEvent::accuracyChanged` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
 
@@ -70,7 +71,7 @@ We can configure sampling period according to our needs with the following flowa
 ```java
 Flowable<ReactiveSensorEvent> observeSensor(final int sensorType, final int samplingPeriodInUs)
  ```
- 
+
 We can use predefined values available in `SensorManager` class from Android SDK:
 - `int SENSOR_DELAY_FASTEST` - get sensor data as fast as possible
 - `int SENSOR_DELAY_GAME` - rate suitable for games
@@ -98,7 +99,7 @@ Good practices
 
 ### Checking whether sensor exists
 
-We should check whether device has concrete sensor before we start observing it. 
+We should check whether device has concrete sensor before we start observing it.
 
 We can do it in the following way:
 
