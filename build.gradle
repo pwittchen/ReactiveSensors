@@ -1,5 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+apply plugin: 'io.codearte.nexus-staging'
+
 ext {
   minSdkVersion = 23
   compileSdkVersion = 29
@@ -26,12 +28,13 @@ buildscript {
     maven {
       url 'https://plugins.gradle.org/m2/'
     }
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.6.2'
 
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
+    dependencies {
+      // NOTE: Do not place your application dependencies here; they belong
+      // in the individual module build.gradle files
+      classpath 'com.android.tools.build:gradle:3.6.2'
+      classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
+    }
   }
 }
 
@@ -44,4 +47,19 @@ allprojects {
       url 'https://plugins.gradle.org/m2/'
     }
   }
+}
+
+def getRepositoryUsername() {
+  return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+  return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+}
+
+nexusStaging {
+  packageGroup = GROUP //optional if packageGroup == project.getGroup()
+  stagingProfileId = "9add401d06ecc9" //when not defined will be got from server using "packageGroup"
+  username = getRepositoryUsername()
+  password = getRepositoryPassword()
 }
