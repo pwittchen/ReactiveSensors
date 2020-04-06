@@ -5,10 +5,12 @@ on:
     branches:
       - Rxjava1.x
       - RxJava2.x
+      - RxJava3.x
   pull_request:
     branches:
       - RxJava1.x
       - RxJava2.x
+      - RxJava3.x
 
 jobs:
   build:
