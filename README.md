@@ -3,10 +3,10 @@
 
 Android library monitoring hardware sensors with RxJava.
 
-| Current Branch | Branch  | Artifact Id | Build Status  | Maven Central |
-|:--------------:|:-------:|:-----------:|:-------------:|:-------------:|
-| | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | [![Build Status for RxJava1.x](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=RxJava1.x)](https://travis-ci.org/pwittchen/ReactiveSensors) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
-| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | [![Build Status for RxJava2.x](https://travis-ci.org/pwittchen/ReactiveSensors.svg?branch=RxJava2.x)](https://travis-ci.org/pwittchen/ReactiveSensors) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
+| Current Branch | Branch  | Artifact Id | CI Build Status | Maven Central |
+|:--------------:|:-------:|:-----------:|:---------------:|:-------------:|
+| | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava1.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
+| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava2.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
 
 This is **RxJava2.x** branch. To see documentation for RxJava1.x, switch to [RxJava1.x](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) branch.
 
