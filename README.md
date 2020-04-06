@@ -37,16 +37,16 @@ Usage
 
 Code sample below demonstrates how to observe Gyroscope sensor. 
 
-Please note that we are filtering events occurring when sensor readings change with `ReactiveSensorFilter.filterSensorChanged()` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorFilter.filterAccuracyChanged()` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
+Please note that we are filtering events occurring when sensor readings change with `ReactiveSensorEvent::sensorChanged` method. There's also event describing change of sensor's accuracy, which can be filtered with `ReactiveSensorEvent::accuracyChanged` method. When we don't apply any filter, we will be notified both about sensor readings and accuracy changes.
 
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
     .subscribeOn(Schedulers.computation())
-    .filter(ReactiveSensorFilter.filterSensorChanged())
+    .filter(ReactiveSensorEvent::sensorChanged)
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(new Consumer<ReactiveSensorEvent>() {
       @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
-        SensorEvent event = reactiveSensorEvent.getSensorEvent();
+        SensorEvent event = reactiveSensorEvent.sensorEvent();
 
         float x = event.values[0];
         float y = event.values[1];
@@ -64,7 +64,7 @@ We can observe any hardware sensor in the same way. You can check [list of all s
 
 ### Setting sampling period
 
-Default sampling period for flowable below is set to `SensorManager.SENSOR_DELAY_NORMAL`.
+Default sampling period for `Flowable` below is set to `SensorManager.SENSOR_DELAY_NORMAL`.
 
 ```java
 Flowable<ReactiveSensorEvent> observeSensor(int sensorType)
@@ -123,7 +123,7 @@ We can let our subscription crash and handle situation when device does not have
 ```java
 new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
     .subscribeOn(Schedulers.computation())
-    .filter(ReactiveSensorFilter.filterSensorChanged())
+    .filter(ReactiveSensorEvent::sensorChanged)
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(new Consumer<ReactiveSensorEvent>() {
       @Override public void accept(ReactiveSensorEvent reactiveSensorEvent) throws Exception {
@@ -144,9 +144,9 @@ When we are using Disposables in Activity, we should subscribe them in `onResume
 
 ### Filtering stream
 
-When we want to receive **only sensor updates**, we should use `ReactiveSensorFilter.filterSensorChanged()` method in `filter(...)` method from RxJava.
+When we want to receive **only sensor updates**, we should use `ReactiveSensorEvent::sensorChanged` method in `filter(...)` method from RxJava.
 
-When we want to receive **only accuracy updates**, we should use `ReactiveSensorFilter.filterAccuracyChanged()` method in `filter(...)` method from RxJava.
+When we want to receive **only accuracy updates**, we should use `ReactiveSensorEvent::accuracyChanged` method in `filter(...)` method from RxJava.
 
 If we don't apply any filter, we will receive both accuracy and sensor readings updates.
 

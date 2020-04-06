@@ -23,20 +23,20 @@ public final class ReactiveSensorEvent {
   private Sensor sensor;
   private int accuracy = -1;
 
-  public ReactiveSensorEvent(SensorEvent sensorEvent) {
+  public ReactiveSensorEvent(final SensorEvent sensorEvent) {
     this.sensorEvent = sensorEvent;
   }
 
-  public ReactiveSensorEvent(Sensor sensor, int accuracy) {
+  public ReactiveSensorEvent(final Sensor sensor, final int accuracy) {
     this.sensor = sensor;
     this.accuracy = accuracy;
   }
 
-  public SensorEvent getSensorEvent() {
+  public SensorEvent sensorEvent() {
     return sensorEvent;
   }
 
-  public Sensor getSensor() {
+  public Sensor sensor() {
     return sensor;
   }
 
@@ -44,11 +44,11 @@ public final class ReactiveSensorEvent {
     return accuracy;
   }
 
-  public boolean isSensorChanged() {
+  public boolean sensorChanged() {
     return sensorEvent != null;
   }
 
-  public boolean isAccuracyChanged() {
+  public boolean accuracyChanged() {
     return sensor != null && accuracy != -1;
   }
 }

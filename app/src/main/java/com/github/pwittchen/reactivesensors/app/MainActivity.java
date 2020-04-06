@@ -43,11 +43,9 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void findViewAndSetOnClickListener(int viewId, final Class<?> cls) {
-    findViewById(viewId).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, cls);
-        startActivity(intent);
-      }
+    findViewById(viewId).setOnClickListener(view -> {
+      Intent intent = new Intent(MainActivity.this, cls);
+      startActivity(intent);
     });
   }
 }

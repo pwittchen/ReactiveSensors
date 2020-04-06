@@ -29,5 +29,6 @@
         <exclude name="ShortVariable" />
         <exclude name="VariableNamingConventions" />
         <exclude name="ShortClassName" />
+        <exclude name="AvoidFieldNameMatchingMethodName" />
     </rule>
 </ruleset>

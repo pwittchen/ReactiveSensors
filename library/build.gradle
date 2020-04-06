@@ -9,7 +9,7 @@ android {
   defaultConfig {
     multiDexEnabled true
     minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion rootProject.ext.compileSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,6 +25,11 @@ android {
   packagingOptions {
     exclude 'LICENSE.txt'
     exclude 'META-INF/LICENSE.txt'
+  }
+
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
   }
 }
 

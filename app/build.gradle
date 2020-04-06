@@ -8,7 +8,7 @@ android {
     multiDexEnabled true
     applicationId "com.github.pwittchen.reactivesensors"
     minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion rootProject.ext.compileSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
   }
@@ -22,6 +22,11 @@ android {
 
   lintOptions {
     abortOnError false
+  }
+
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
   }
 }
 

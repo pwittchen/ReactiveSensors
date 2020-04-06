@@ -22,9 +22,7 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.functions.Action;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -33,19 +31,16 @@ import java.util.Locale;
  * ReactiveSensors is an Android library monitoring hardware and software sensors with RxJava
  * Observables
  */
-public final class ReactiveSensors {
+public class ReactiveSensors {
 
   private SensorManager sensorManager;
-
-  private ReactiveSensors() {
-  }
 
   /**
    * Creates ReactiveSensors object
    *
    * @param context context
    */
-  public ReactiveSensors(Context context) {
+  public ReactiveSensors(final Context context) {
     this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
   }
 
@@ -64,7 +59,7 @@ public final class ReactiveSensors {
    * @param sensorType from Sensor class available in Android SDK
    * @return boolean returns true if sensor is available
    */
-  public boolean hasSensor(int sensorType) {
+  public boolean hasSensor(final int sensorType) {
     return sensorManager.getDefaultSensor(sensorType) != null;
   }
 
@@ -75,7 +70,7 @@ public final class ReactiveSensors {
    * @param sensorType sensor type from Sensor class from Android SDK
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType) {
+  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType) {
     return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL, null);
   }
 
@@ -88,12 +83,13 @@ public final class ReactiveSensors {
    * SensorManager class with prefix SENSOR_DELAY
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs) {
+  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
+      final int samplingPeriodInUs) {
     return observeSensor(sensorType, samplingPeriodInUs, null);
   }
 
-  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
-      final Handler handler) {
+  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
+      final int samplingPeriodInUs, final Handler handler) {
     return observeSensor(sensorType, samplingPeriodInUs, handler, BackpressureStrategy.BUFFER);
   }
 
@@ -108,8 +104,8 @@ public final class ReactiveSensors {
    * @param strategy BackpressureStrategy for RxJava 2 Flowable type
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
-      final Handler handler, final BackpressureStrategy strategy) {
+  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
+      final int samplingPeriodInUs, final Handler handler, final BackpressureStrategy strategy) {
 
     if (!hasSensor(sensorType)) {
       String format = "Sensor with id = %d is not available on this device";
@@ -121,24 +117,16 @@ public final class ReactiveSensors {
     final SensorEventListenerWrapper wrapper = new SensorEventListenerWrapper();
     final SensorEventListener listener = wrapper.create();
 
-    return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
-      @Override
-      public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter) {
+    return Flowable.create((FlowableOnSubscribe<ReactiveSensorEvent>) emitter -> {
 
-        wrapper.setEmitter(emitter);
+      wrapper.setEmitter(emitter);
 
-        if (handler == null) {
-          sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
-        } else {
-          sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
-        }
+      if (handler == null) {
+        sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
+      } else {
+        sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
       }
-    }, strategy).doOnCancel(new Action() {
-      @Override
-      public void run() {
-        sensorManager.unregisterListener(listener);
-      }
-    });
+    }, strategy).doOnCancel(() -> sensorManager.unregisterListener(listener));
   }
 
   /**
@@ -151,12 +139,12 @@ public final class ReactiveSensors {
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
-      int... sensorTypes) {
+      final int... sensorTypes) {
     return observeManySensors(samplingPeriodInUs, null, sensorTypes);
   }
 
   public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
-      final Handler handler, int... sensorTypes) {
+      final Handler handler, final int... sensorTypes) {
     return observeManySensors(samplingPeriodInUs, handler, BackpressureStrategy.BUFFER,
         sensorTypes);
   }
@@ -173,7 +161,7 @@ public final class ReactiveSensors {
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
-      final Handler handler, final BackpressureStrategy strategy, int... sensorTypes) {
+      final Handler handler, final BackpressureStrategy strategy, final int... sensorTypes) {
     final String errorMessage = getErrorMessage(sensorTypes);
     if (errorMessage.length() != 0) {
       return Flowable.error(new SensorNotFoundException(errorMessage));
@@ -187,27 +175,19 @@ public final class ReactiveSensors {
       sensors.add(sensorManager.getDefaultSensor(sensorType));
     }
 
-    return Flowable.create(new FlowableOnSubscribe<ReactiveSensorEvent>() {
-      @Override
-      public void subscribe(final FlowableEmitter<ReactiveSensorEvent> emitter) {
-        wrapper.setEmitter(emitter);
+    return Flowable.create((FlowableOnSubscribe<ReactiveSensorEvent>) emitter -> {
+      wrapper.setEmitter(emitter);
 
-        if (handler == null) {
-          for (Sensor sensor : sensors) {
-            sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
-          }
-        } else {
-          for (Sensor sensor : sensors) {
-            sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
-          }
+      if (handler == null) {
+        for (Sensor sensor : sensors) {
+          sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
+        }
+      } else {
+        for (Sensor sensor : sensors) {
+          sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
         }
       }
-    }, strategy).doOnCancel(new Action() {
-      @Override
-      public void run() {
-        sensorManager.unregisterListener(listener);
-      }
-    });
+    }, strategy).doOnCancel(() -> sensorManager.unregisterListener(listener));
   }
 
   private String getErrorMessage(final int[] sensorTypes) {
