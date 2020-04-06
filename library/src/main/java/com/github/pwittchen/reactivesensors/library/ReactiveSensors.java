@@ -19,7 +19,6 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Handler;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableOnSubscribe;
@@ -71,7 +70,7 @@ public class ReactiveSensors {
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType) {
-    return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL, null);
+    return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL);
   }
 
   /**
@@ -85,12 +84,7 @@ public class ReactiveSensors {
    */
   public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
       final int samplingPeriodInUs) {
-    return observeSensor(sensorType, samplingPeriodInUs, null);
-  }
-
-  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
-      final int samplingPeriodInUs, final Handler handler) {
-    return observeSensor(sensorType, samplingPeriodInUs, handler, BackpressureStrategy.BUFFER);
+    return observeSensor(sensorType, samplingPeriodInUs, BackpressureStrategy.BUFFER);
   }
 
   /**
@@ -99,13 +93,12 @@ public class ReactiveSensors {
    *
    * @param sensorType sensor type from Sensor class from Android SDK
    * @param samplingPeriodInUs sampling period in microseconds,
-   * @param handler the Handler the sensor events will be delivered to, use default if it is null
    * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
    * @param strategy BackpressureStrategy for RxJava 2 Flowable type
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
-      final int samplingPeriodInUs, final Handler handler, final BackpressureStrategy strategy) {
+      final int samplingPeriodInUs, final BackpressureStrategy strategy) {
 
     if (!hasSensor(sensorType)) {
       String format = "Sensor with id = %d is not available on this device";
@@ -118,14 +111,8 @@ public class ReactiveSensors {
     final SensorEventListener listener = wrapper.create();
 
     return Flowable.create((FlowableOnSubscribe<ReactiveSensorEvent>) emitter -> {
-
       wrapper.setEmitter(emitter);
-
-      if (handler == null) {
-        sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
-      } else {
-        sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
-      }
+      sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
     }, strategy).doOnCancel(() -> sensorManager.unregisterListener(listener));
   }
 
@@ -140,13 +127,7 @@ public class ReactiveSensors {
    */
   public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
       final int... sensorTypes) {
-    return observeManySensors(samplingPeriodInUs, null, sensorTypes);
-  }
-
-  public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
-      final Handler handler, final int... sensorTypes) {
-    return observeManySensors(samplingPeriodInUs, handler, BackpressureStrategy.BUFFER,
-        sensorTypes);
+    return observeManySensors(samplingPeriodInUs, BackpressureStrategy.BUFFER, sensorTypes);
   }
 
   /**
@@ -154,14 +135,13 @@ public class ReactiveSensors {
    * ReactiveSensorEvent object with defined sampling period
    *
    * @param samplingPeriodInUs sampling period in microseconds,
-   * @param handler the Handler the sensor events will be delivered to, use default if it is null
    * you can use predefined values from SensorManager class with prefix SENSOR_DELAY
    * @param strategy BackpressureStrategy for RxJava 2 Flowable type
    * @param sensorTypes sensor types array from Sensor class from Android SDK
    * @return RxJava Observable with ReactiveSensorEvent
    */
   public Flowable<ReactiveSensorEvent> observeManySensors(final int samplingPeriodInUs,
-      final Handler handler, final BackpressureStrategy strategy, final int... sensorTypes) {
+      final BackpressureStrategy strategy, final int... sensorTypes) {
     final String errorMessage = getErrorMessage(sensorTypes);
     if (errorMessage.length() != 0) {
       return Flowable.error(new SensorNotFoundException(errorMessage));
@@ -177,15 +157,8 @@ public class ReactiveSensors {
 
     return Flowable.create((FlowableOnSubscribe<ReactiveSensorEvent>) emitter -> {
       wrapper.setEmitter(emitter);
-
-      if (handler == null) {
-        for (Sensor sensor : sensors) {
-          sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
-        }
-      } else {
-        for (Sensor sensor : sensors) {
-          sensorManager.registerListener(listener, sensor, samplingPeriodInUs, handler);
-        }
+      for (Sensor sensor : sensors) {
+        sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
       }
     }, strategy).doOnCancel(() -> sensorManager.unregisterListener(listener));
   }

@@ -73,8 +73,7 @@ Flowable<ReactiveSensorEvent> observeSensor(int sensorType)
 We can configure sampling period according to our needs with the following flowable:
 
 ```java
-Flowable<ReactiveSensorEvent> observeSensor(int sensorType,
-                                              final int samplingPeriodInUs)
+Flowable<ReactiveSensorEvent> observeSensor(final int sensorType, final int samplingPeriodInUs)
  ```
  
 We can use predefined values available in `SensorManager` class from Android SDK:
@@ -88,8 +87,8 @@ We can also define our own integer value in microseconds, but it's recommended t
 We can customize RxJava 2 Backpressure Strategy for our flowable with method:
 
 ```java
-Flowable<ReactiveSensorEvent> observeSensor(int sensorType, final int samplingPeriodInUs,
-      final Handler handler, final BackpressureStrategy strategy)
+Flowable<ReactiveSensorEvent> observeSensor(final int sensorType, final int samplingPeriodInUs,
+                                            final BackpressureStrategy strategy)
 ```
 
 Default Backpressure Strategy is `BUFFER`.
