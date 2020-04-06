@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import com.github.pwittchen.reactivesensors.R;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public abstract class SensorActivity extends AppCompatActivity {
   protected int sensorType;

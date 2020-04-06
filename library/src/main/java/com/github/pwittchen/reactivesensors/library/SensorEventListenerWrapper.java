@@ -18,7 +18,7 @@ package com.github.pwittchen.reactivesensors.library;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import io.reactivex.FlowableEmitter;
+import io.reactivex.rxjava3.core.FlowableEmitter;
 
 public class SensorEventListenerWrapper {
 
