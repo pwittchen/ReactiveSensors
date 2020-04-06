@@ -1,9 +1,19 @@
 CHANGELOG
 =========
 
+v. 0.3.0
+--------
+*06 Nov 2020*
+
+added multiple sensors observing feature
+updated getters of ReactiveSensorEvent (removed get prefix)
+updated project dependencies
+removed handler param from the library API
+
 v. 0.2.0
 --------
 *02 Nov 2017*
+
 - returning error through Rx to make the error handling easier - issue #29
 - creating sensor observable with the ability to specify handler - PR #26
 - updated project dependencies
