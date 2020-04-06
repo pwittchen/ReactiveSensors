@@ -152,6 +152,9 @@ See also [Best Practices for Accessing and Using Sensors](http://developer.andro
 Download
 --------
 
+latest version: ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat)
+
+replace `x.y.z` with the latest version
 
 You can depend on the library through Maven:
 
@@ -159,7 +162,7 @@ You can depend on the library through Maven:
 <dependency>
     <groupId>com.github.pwittchen</groupId>
     <artifactId>reactivesensors-rx2</artifactId>
-    <version>0.2.0</version>
+    <version>x.y.z</version>
 </dependency>
 ```
 
@@ -167,7 +170,7 @@ or through Gradle:
 
 ```groovy
 dependencies {
-  compile 'com.github.pwittchen:reactivesensors-rx2:0.2.0'
+  compile 'com.github.pwittchen:reactivesensors-rx2:x.y.z'
 }
 ```
 
