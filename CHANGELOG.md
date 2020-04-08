@@ -1,15 +1,26 @@
 CHANGELOG
 =========
 
+v. 0.3.2
+--------
+*08 Apr 2020*
+
+- fixing `Flowable` - moving sensors registration before `Flowable.create(...)` method (without that several RxJava operators could not be applied on the stream)
+- making `ReactiveSensorEvent` non-final
+- making `SensorEventListener` package-private
+- changing `FlowableEmitter` in `SensorEventListener` to `Emitter`
+- removing `getEmitter()` method from `SensorEventListenerWrapper`
+
+
 v. 0.3.1
 --------
-*07 Nov 2020*
+*07 Apr 2020*
 
 - downgraded min Android SDK version to 16
 
 v. 0.3.0
 --------
-*06 Nov 2020*
+*06 Apr 2020*
 
 added multiple sensors observing feature
 updated getters of ReactiveSensorEvent (removed get prefix)
