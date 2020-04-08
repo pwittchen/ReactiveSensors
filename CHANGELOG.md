@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v. 0.3.1
+--------
+*07 Nov 2020*
+
+- downgraded min Android SDK version to 16
+
 v. 0.3.0
 --------
 *06 Nov 2020*
