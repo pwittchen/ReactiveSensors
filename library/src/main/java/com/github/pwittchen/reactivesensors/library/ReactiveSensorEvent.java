@@ -18,7 +18,7 @@ package com.github.pwittchen.reactivesensors.library;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
-public final class ReactiveSensorEvent {
+public class ReactiveSensorEvent {
   private SensorEvent sensorEvent;
   private Sensor sensor;
   private int accuracy = -1;
