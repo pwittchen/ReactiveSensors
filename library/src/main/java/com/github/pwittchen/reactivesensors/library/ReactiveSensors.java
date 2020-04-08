@@ -21,8 +21,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableOnSubscribe;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,11 +107,11 @@ public class ReactiveSensors {
     final Sensor sensor = sensorManager.getDefaultSensor(sensorType);
     final SensorEventListenerWrapper wrapper = new SensorEventListenerWrapper();
     final SensorEventListener listener = wrapper.create();
+    sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
 
-    return Flowable.create((FlowableOnSubscribe<ReactiveSensorEvent>) emitter -> {
-      wrapper.setEmitter(emitter);
-      sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
-    }, strategy).doOnCancel(() -> sensorManager.unregisterListener(listener));
+    return Flowable
+        .create(wrapper::setEmitter, strategy)
+        .doOnCancel(() -> sensorManager.unregisterListener(listener));
   }
 
   /**
@@ -150,17 +148,14 @@ public class ReactiveSensors {
     final SensorEventListenerWrapper wrapper = new SensorEventListenerWrapper();
     final SensorEventListener listener = wrapper.create();
 
-    final List<Sensor> sensors = new ArrayList<>();
     for (int sensorType : sensorTypes) {
-      sensors.add(sensorManager.getDefaultSensor(sensorType));
+      final Sensor sensor = sensorManager.getDefaultSensor(sensorType);
+      sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
     }
 
-    return Flowable.create((FlowableOnSubscribe<ReactiveSensorEvent>) emitter -> {
-      wrapper.setEmitter(emitter);
-      for (Sensor sensor : sensors) {
-        sensorManager.registerListener(listener, sensor, samplingPeriodInUs);
-      }
-    }, strategy).doOnCancel(() -> sensorManager.unregisterListener(listener));
+    return Flowable
+        .create(wrapper::setEmitter, strategy)
+        .doOnCancel(() -> sensorManager.unregisterListener(listener));
   }
 
   private String getErrorMessage(final int[] sensorTypes) {

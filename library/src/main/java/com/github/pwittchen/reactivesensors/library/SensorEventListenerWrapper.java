@@ -18,33 +18,29 @@ package com.github.pwittchen.reactivesensors.library;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import io.reactivex.FlowableEmitter;
+import io.reactivex.Emitter;
 
-public class SensorEventListenerWrapper {
+class SensorEventListenerWrapper {
 
-  private FlowableEmitter<ReactiveSensorEvent> emitter;
+  private Emitter<ReactiveSensorEvent> emitter;
 
-  public FlowableEmitter<ReactiveSensorEvent> getEmitter() {
-    return emitter;
-  }
-
-  public void setEmitter(FlowableEmitter<ReactiveSensorEvent> emitter) {
+  void setEmitter(Emitter<ReactiveSensorEvent> emitter) {
     this.emitter = emitter;
   }
 
-  public SensorEventListener create() {
+  SensorEventListener create() {
     return new SensorEventListener() {
       @Override public void onSensorChanged(SensorEvent sensorEvent) {
         ReactiveSensorEvent event = new ReactiveSensorEvent(sensorEvent);
-        if (getEmitter() != null) {
-          getEmitter().onNext(event);
+        if (emitter != null) {
+          emitter.onNext(event);
         }
       }
 
       @Override public void onAccuracyChanged(Sensor sensor, int accuracy) {
         ReactiveSensorEvent event = new ReactiveSensorEvent(sensor, accuracy);
-        if (getEmitter() != null) {
-          getEmitter().onNext(event);
+        if (emitter != null) {
+          emitter.onNext(event);
         }
       }
     };
