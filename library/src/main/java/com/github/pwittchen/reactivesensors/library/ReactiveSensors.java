@@ -28,7 +28,7 @@ import java.util.Locale;
  * ReactiveSensors is an Android library monitoring hardware and software sensors with RxJava
  * Observables
  */
-public class ReactiveSensors {
+public class ReactiveSensors implements SensorsProxy {
 
   private SensorManager sensorManager;
 
@@ -67,7 +67,7 @@ public class ReactiveSensors {
    * @param sensorType sensor type from Sensor class from Android SDK
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType) {
+  @Override public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType) {
     return observeSensor(sensorType, SensorManager.SENSOR_DELAY_NORMAL);
   }
 
@@ -80,7 +80,7 @@ public class ReactiveSensors {
    * SensorManager class with prefix SENSOR_DELAY
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
+  @Override public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
       final int samplingPeriodInUs) {
     return observeSensor(sensorType, samplingPeriodInUs, BackpressureStrategy.BUFFER);
   }
@@ -95,7 +95,7 @@ public class ReactiveSensors {
    * @param strategy BackpressureStrategy for RxJava 2 Flowable type
    * @return RxJava Observable with ReactiveSensorEvent
    */
-  public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
+  @Override public Flowable<ReactiveSensorEvent> observeSensor(final int sensorType,
       final int samplingPeriodInUs, final BackpressureStrategy strategy) {
 
     if (!hasSensor(sensorType)) {

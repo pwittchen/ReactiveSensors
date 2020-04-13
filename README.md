@@ -20,6 +20,7 @@ Contents
   - [Letting it crash](#letting-it-crash)
   - [Subscribing and disposing flowables](#subscribing-and-disposing-flowables)
   - [Filtering stream](#filtering-stream)
+  - [Writing tests](#writing-tests)
   - [Other practices](#other-practices)
 - [Download](#download)
 - [Tests](#tests)
@@ -144,6 +145,11 @@ When we want to receive **only sensor updates**, we should use `ReactiveSensorEv
 When we want to receive **only accuracy updates**, we should use `ReactiveSensorEvent::accuracyChanged` method in `filter(...)` method from RxJava.
 
 If we don't apply any filter, we will receive both accuracy and sensor readings updates.
+
+### Writing tests
+
+`ReactiveSensors` class implements `SensorsProxy` interface. It allows you to create stubs or mocks for testing behavior of the sensors in your application without need of mocking `SensorManager` class from Android SDK accessing hardware components.
+Once you instantiate `SensorsProxy`, then you'll be allowed to mock or stub it pretty easily.
 
 ### Other practices
 
