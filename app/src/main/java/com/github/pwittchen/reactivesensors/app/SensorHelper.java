@@ -5,13 +5,14 @@ import android.widget.TextView;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensorEvent;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
 import com.github.pwittchen.reactivesensors.library.SensorNotFoundException;
+import com.github.pwittchen.reactivesensors.library.SensorsProxy;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.util.Locale;
 
 class SensorHelper {
-  private ReactiveSensors reactiveSensors;
+  private SensorsProxy reactiveSensors;
   private int sensorType;
   private String sensorName;
   private TextView textViewForMessage;
@@ -24,6 +25,7 @@ class SensorHelper {
   }
 
   Disposable createSubscription() {
+
     return reactiveSensors.observeSensor(sensorType)
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())

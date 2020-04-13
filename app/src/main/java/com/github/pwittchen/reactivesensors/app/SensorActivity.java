@@ -11,16 +11,14 @@ public abstract class SensorActivity extends AppCompatActivity {
   protected int sensorType;
   protected String sensorName;
 
-  private TextView tvSensor;
-  private ReactiveSensors reactiveSensors;
   private Disposable subscription;
   private SensorHelper sensorHelper;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sensor_sample);
-    tvSensor = (TextView) findViewById(R.id.sensor);
-    reactiveSensors = new ReactiveSensors(this);
+    final TextView tvSensor = (TextView) findViewById(R.id.sensor);
+    final ReactiveSensors reactiveSensors = new ReactiveSensors(getApplicationContext());
     sensorHelper = new SensorHelper(reactiveSensors, sensorType, sensorName, tvSensor);
   }
 
