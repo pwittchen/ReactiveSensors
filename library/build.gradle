@@ -36,6 +36,7 @@ android {
 dependencies {
   api deps.rxjava2
   api deps.rxandroid2
+  implementation deps.supportannotations
 
   androidTestImplementation deps.testingsupportlib
   androidTestImplementation(deps.truth) {

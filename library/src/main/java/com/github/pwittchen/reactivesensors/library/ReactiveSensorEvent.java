@@ -17,6 +17,8 @@ package com.github.pwittchen.reactivesensors.library;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 public class ReactiveSensorEvent {
   private SensorEvent sensorEvent;
@@ -30,6 +32,18 @@ public class ReactiveSensorEvent {
   public ReactiveSensorEvent(final Sensor sensor, final int accuracy) {
     this.sensor = sensor;
     this.accuracy = accuracy;
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.N) public int sensorId() {
+    return sensorEvent.sensor.getId();
+  }
+
+  public String sensorName() {
+    return sensorEvent.sensor.getName();
+  }
+
+  public float[] sensorValues() {
+    return sensorEvent.values;
   }
 
   public SensorEvent sensorEvent() {
