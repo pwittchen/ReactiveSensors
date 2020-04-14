@@ -148,8 +148,7 @@ If we don't apply any filter, we will receive both accuracy and sensor readings 
 
 ### Writing tests
 
-`ReactiveSensors` class implements `SensorsProxy` interface. It allows you to create stubs or mocks for testing behavior of the sensors in your application without need of mocking `SensorManager` class from Android SDK accessing hardware components.
-Once you instantiate `SensorsProxy`, then you'll be allowed to mock or stub it pretty easily.
+`ReactiveSensors` class implements `SensorsProxy` interface. It allows you to create stubs or mocks for testing behavior of the sensors in your application without need of mocking `SensorManager` class from Android SDK accessing hardware components. Once you instantiate `SensorsProxy`, then you'll be allowed to mock or stub it pretty easily. Moreover, you can mock `ReactiveSensorEvent`, which wraps code from Android API, expose appropriate methods and does not force you to use native code accessing hardware sensors in tests, so you can foucus just on the application logic.
 
 ### Other practices
 
