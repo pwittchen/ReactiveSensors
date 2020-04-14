@@ -42,12 +42,11 @@ new ReactiveSensors(context).observeSensor(Sensor.TYPE_GYROSCOPE)
     .filter(ReactiveSensorEvent::sensorChanged)
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(new Consumer<ReactiveSensorEvent>() {
-      @Override public void call(ReactiveSensorEvent reactiveSensorEvent) {
-        SensorEvent event = reactiveSensorEvent.sensorEvent();
+      @Override public void call(ReactiveSensorEvent event) {
 
-        float x = event.values[0];
-        float y = event.values[1];
-        float z = event.values[2];
+        float x = event.sensorValues()[0];
+        float y = event.sensorValues()[1];
+        float z = event.sensorValues()[2];
 
         String message = String.format("x = %f, y = %f, z = %f", x, y, z);
 
