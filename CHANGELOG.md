@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+v. 0.4.1
+--------
+*14 Apr 2020*
+
+- fixed sonatype artifact release issues
+
+v. 0.4.0
+--------
+*14 Apr 2020*
+
+- added new methods to `ReactiveSensorEvent` class: `int sensorId()`, `String sensorName()`, `float[] sensorValues()`
+
 v. 0.3.3
 --------
 *14 Apr 2020*
