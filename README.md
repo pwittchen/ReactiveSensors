@@ -80,7 +80,7 @@ We can use predefined values available in `SensorManager` class from Android SDK
 
 We can also define our own integer value in microseconds, but it's recommended to use predefined values.
 
-We can customize RxJava 2 Backpressure Strategy for our flowable with method:
+We can customize RxJava Backpressure Strategy for our flowable with method:
 
 ```java
 Flowable<ReactiveSensorEvent> observeSensor(final int sensorType, final int samplingPeriodInUs,
