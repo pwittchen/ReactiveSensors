@@ -1,6 +1,5 @@
 package com.github.pwittchen.reactivesensors.app;
 
-import android.hardware.SensorEvent;
 import android.widget.TextView;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensorEvent;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
@@ -30,15 +29,13 @@ class SensorHelper {
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .filter(ReactiveSensorEvent::sensorChanged)
-        .subscribe(reactiveSensorEvent -> {
-          SensorEvent event = reactiveSensorEvent.sensorEvent();
+        .subscribe(event -> {
+          float x = event.sensorValues()[0];
+          float y = event.sensorValues()[1];
+          float z = event.sensorValues()[2];
 
-          float x = event.values[0];
-          float y = event.values[1];
-          float z = event.values[2];
-
-          String format = "%s readings:\n x = %f\n y = %f\n z = %f";
-          String message = String.format(Locale.getDefault(), format, sensorName, x, y, z);
+          final String format = "%s readings:\n x = %f\n y = %f\n z = %f";
+          String message = String.format(Locale.getDefault(), format, event.sensorName(), x, y, z);
           textViewForMessage.setText(message);
         }, throwable -> {
           if (throwable instanceof SensorNotFoundException) {
