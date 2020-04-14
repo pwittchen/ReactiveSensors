@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v. 0.3.3
+--------
+*14 Apr 2020*
+
+- added `SensorsProxy` interface implemented by `ReactiveSensors` class to improve library integration and testability in external projects, which depend on it
+
 v. 0.3.2
 --------
 *08 Apr 2020*
