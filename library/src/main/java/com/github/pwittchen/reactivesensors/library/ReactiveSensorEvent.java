@@ -54,7 +54,7 @@ public class ReactiveSensorEvent {
     return sensor;
   }
 
-  public int getAccuracy() {
+  public int accuracy() {
     return accuracy;
   }
 
