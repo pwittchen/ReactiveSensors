@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v. 0.4.2
+--------
+*?*
+
+- made getters of ReactiveSensorEvent consistent: `getAccuracy()` -> `accuracy()` 
+
 v. 0.4.0
 --------
 *14 Apr 2020*
