@@ -7,11 +7,10 @@ ext {
   compileSdkVersion = 29
   targetSdkVersion = 29
   buildToolsVersion = "29.0.3"
-  gradleVersion = '3.0.1'
   kotlinVersion = "1.4.0"
 }
 
-ext.deps = [rxjava            : 'io.reactivex.rxjava3:rxjava:3.0.5',
+ext.deps = [rxjava            : 'io.reactivex.rxjava3:rxjava:3.0.7',
             rxandroid         : 'io.reactivex.rxjava3:rxandroid:3.0.0',
             supportannotations: 'com.android.support:support-annotations:28.0.0',
             appcompatv7       : 'com.android.support:appcompat-v7:28.0.0',
@@ -32,7 +31,7 @@ buildscript {
     dependencies {
       // NOTE: Do not place your application dependencies here; they belong
       // in the individual module build.gradle files
-      classpath 'com.android.tools.build:gradle:3.6.3'
+      classpath 'com.android.tools.build:gradle:4.0.2'
       classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0"
     }
   }
