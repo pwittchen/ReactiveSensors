@@ -3,7 +3,7 @@ CHANGELOG
 
 v. 0.4.4
 --------
-*?*
+*30 Oct 2020*
 
 - updated RxJava to 3.0.7
 - updated Android Gradle Build Tools to 4.0.2
