@@ -26,6 +26,7 @@ Contents
 - [Tests](#tests)
 - [Code style](#code-style)
 - [Static code analysis](#static-code-analysis)
+- [Releasing](#releasing)
 - [References](#references)
 - [License](#license)
 
@@ -202,6 +203,11 @@ Static code analysis runs Checkstyle, FindBugs, PMD and Lint. It can be executed
  ```
 
 Reports from analysis are generated in `library/build/reports/` directory.
+
+Releasing
+----------
+
+See [RELEASING.md](https://github.com/pwittchen/ReactiveSensors/blob/RxJava3.x/RELEASING.md) file.
 
 References
 ----------
