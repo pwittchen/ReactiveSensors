@@ -1,8 +1,8 @@
 package com.github.pwittchen.reactivesensors.app;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import com.github.pwittchen.reactivesensors.R;
 import com.github.pwittchen.reactivesensors.library.ReactiveSensors;
 import io.reactivex.rxjava3.disposables.Disposable;
