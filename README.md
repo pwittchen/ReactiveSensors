@@ -4,7 +4,7 @@
 Android library monitoring hardware sensors with RxJava.
 
 | Current Branch | Branch  | Artifact Id | Maven Central |
-|:--------------:|:-------:|:-----------:|:--------------:|:-------------:|
+|:--------------:|:-------:|:-----------:|:--------------:|
 | | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
 | | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
 | :ballot_box_with_check: | [`RxJava3.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava3.x) | `reactivesensors-rx3` | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx3.svg?style=flat) |
