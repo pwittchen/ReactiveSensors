@@ -1,13 +1,13 @@
 # ReactiveSensors
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ReactiveSensors-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2451) [![Android CI](https://github.com/pwittchen/ReactiveSensors/actions/workflows/android.yml/badge.svg)](https://github.com/pwittchen/ReactiveSensors/actions/workflows/android.yml)
 
 Android library monitoring hardware sensors with RxJava.
 
-| Current Branch | Branch  | Artifact Id | CI Build Status | Maven Central |
-|:--------------:|:-------:|:-----------:|:---------------:|:-------------:|
-| | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava1.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
-| | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava2.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
-| :ballot_box_with_check: | [`RxJava3.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava3.x) | `reactivesensors-rx3` | ![Android CI](https://github.com/pwittchen/ReactiveSensors/workflows/Android%20CI/badge.svg?branch=RxJava3.x) | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx3.svg?style=flat) |
+| Current Branch | Branch  | Artifact Id | Maven Central |
+|:--------------:|:-------:|:-----------:|:--------------:|
+| | [`RxJava1.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava1.x) | `reactivesensors` | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors.svg?style=flat) |
+| | [`RxJava2.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava2.x) | `reactivesensors-rx2` | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx2.svg?style=flat) |
+| :ballot_box_with_check: | [`RxJava3.x`](https://github.com/pwittchen/ReactiveSensors/tree/RxJava3.x) | `reactivesensors-rx3` | ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/reactivesensors-rx3.svg?style=flat) |
 
 
 Contents
@@ -26,6 +26,7 @@ Contents
 - [Tests](#tests)
 - [Code style](#code-style)
 - [Static code analysis](#static-code-analysis)
+- [Releasing](#releasing)
 - [References](#references)
 - [License](#license)
 
@@ -202,6 +203,11 @@ Static code analysis runs Checkstyle, FindBugs, PMD and Lint. It can be executed
  ```
 
 Reports from analysis are generated in `library/build/reports/` directory.
+
+Releasing
+----------
+
+See [RELEASING.md](https://github.com/pwittchen/ReactiveSensors/blob/RxJava3.x/RELEASING.md) file.
 
 References
 ----------

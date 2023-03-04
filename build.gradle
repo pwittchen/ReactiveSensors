@@ -7,21 +7,19 @@ ext {
   compileSdkVersion = 29
   targetSdkVersion = 29
   buildToolsVersion = "29.0.3"
-  kotlinVersion = "1.4.0"
+  kotlinVersion = "1.4.2"
 }
 
-ext.deps = [rxjava            : 'io.reactivex.rxjava3:rxjava:3.0.7',
-            rxandroid         : 'io.reactivex.rxjava3:rxandroid:3.0.0',
-            supportannotations: 'com.android.support:support-annotations:28.0.0',
-            appcompatv7       : 'com.android.support:appcompat-v7:28.0.0',
-            testingsupportlib : 'com.android.support.test:testing-support-lib:0.1',
-            truth             : 'com.google.truth:truth:1.0.1',
+ext.deps = [rxjava            : 'io.reactivex.rxjava3:rxjava:3.1.6',
+            rxandroid         : 'io.reactivex.rxjava3:rxandroid:3.0.2',
+            appcompat         : 'androidx.appcompat:appcompat:1.3.1', // NOTE: newer versions may cause build errors!
+            annotation        : 'androidx.annotation:annotation:1.6.0',
+            truth             : 'com.google.truth:truth:1.1.3',
             kotlinstdlib      : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
             kotlingradleplugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"]
 
 buildscript {
   repositories {
-    jcenter()
     google()
     mavenCentral()
     maven {
@@ -39,7 +37,6 @@ buildscript {
 
 allprojects {
   repositories {
-    jcenter()
     google()
     mavenCentral()
     maven {

@@ -17,10 +17,21 @@ package com.github.pwittchen.reactivesensors.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
 import com.github.pwittchen.reactivesensors.R;
-import com.github.pwittchen.reactivesensors.app.samples.*;
+import com.github.pwittchen.reactivesensors.app.samples.AccelerometerActivity;
+import com.github.pwittchen.reactivesensors.app.samples.AmbientTemperatureActivity;
+import com.github.pwittchen.reactivesensors.app.samples.GravityActivity;
+import com.github.pwittchen.reactivesensors.app.samples.GyroscopeActivity;
+import com.github.pwittchen.reactivesensors.app.samples.LightActivity;
+import com.github.pwittchen.reactivesensors.app.samples.LinearAccelerationActivity;
+import com.github.pwittchen.reactivesensors.app.samples.MagneticFieldActivity;
+import com.github.pwittchen.reactivesensors.app.samples.OrientationActivity;
+import com.github.pwittchen.reactivesensors.app.samples.PressureActivity;
+import com.github.pwittchen.reactivesensors.app.samples.ProximityActivity;
+import com.github.pwittchen.reactivesensors.app.samples.RelativeHumidityActivity;
+import com.github.pwittchen.reactivesensors.app.samples.RotationVectorActivity;
+import com.github.pwittchen.reactivesensors.app.samples.TemperatureActivity;
 
 public class MainActivity extends AppCompatActivity {
 

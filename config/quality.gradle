@@ -5,7 +5,7 @@ apply plugin: 'pmd'
 check.dependsOn 'checkstyle', 'pmd', 'lint'
 
 checkstyle {
-    toolVersion = "6.0"
+    toolVersion = "6.2"
 }
 
 task checkstyle(type: Checkstyle) {

@@ -18,7 +18,7 @@ package com.github.pwittchen.reactivesensors.library;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 public class ReactiveSensorEvent {
   private SensorEvent sensorEvent;

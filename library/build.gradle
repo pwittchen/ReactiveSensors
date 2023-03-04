@@ -36,9 +36,9 @@ android {
 dependencies {
   api deps.rxjava
   api deps.rxandroid
-  implementation deps.supportannotations
+  api deps.annotation
 
-  androidTestImplementation deps.testingsupportlib
+  androidTestImplementation project(path: ':library')
   androidTestImplementation(deps.truth) {
     exclude group: 'junit' // Android has JUnit built in
   }
