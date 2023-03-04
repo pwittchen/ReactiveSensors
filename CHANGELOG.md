@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+v. 0.4.5
+--------
+*04 Mar 2022*
+
+- updated Android CI config
+- removed FUNDING.yml file
+- fix format in README.md
+- updated Android CI badge in README.md
+- added releasing guidelines
+- updated checkout gh action from v2 to v3
+- issue #99: bumped project dependencies, updated configuration, removed legacy support annotations dependency from the library
+
 v. 0.4.4
 --------
 *30 Oct 2020*
@@ -18,7 +30,7 @@ v. 0.4.2
 --------
 *27 Apr 2020*
 
-- made getters of ReactiveSensorEvent consistent: `getAccuracy()` -> `accuracy()` 
+- made getters of ReactiveSensorEvent consistent: `getAccuracy()` -> `accuracy()`
 
 v. 0.4.1
 --------
